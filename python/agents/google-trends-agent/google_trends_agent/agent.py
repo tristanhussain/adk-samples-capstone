@@ -1,21 +1,12 @@
-import os
-
-from dotenv import load_dotenv
 from google.adk.agents import LlmAgent, SequentialAgent
 
 from google_trends_agent.prompt import load_agent_instructions
 from google_trends_agent.tools import execute_bigquery_sql
 
-# Construct the path to the .env file in the parent directory
-dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
-
-# Load the environment variables from the .env file
-load_dotenv(dotenv_path)
-
 # Now you can access your environment variables using os.getenv()
 
-MODEL_AGENT = os.getenv("MODEL_AGENT", "gemini-2.5-pro")
-MODEL_TOOL = os.getenv("MODEL_TOOL", "gemini-2.5-flash")
+MODEL_AGENT = "gemini-2.5-pro"
+MODEL_TOOL = "gemini-2.5-flash"
 
 # --- Dynamically load agent instructions ---
 full_instruction = load_agent_instructions()
