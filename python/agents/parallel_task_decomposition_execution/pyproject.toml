@@ -20,6 +20,7 @@ dependencies = [
 dev = [
     "pytest>=8.0.0",
     "pytest-asyncio>=0.24.0",
+    "agent-starter-pack>=0.14.1",
 ]
 
 [tool.ruff]
@@ -37,3 +38,9 @@ packages = ["parallel_task_decomposition_execution"]
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+pythonpath = "."
+
+[tool.agent-starter-pack]
+example_question = "Create a 2026 AI trends report"
