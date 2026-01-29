@@ -38,8 +38,8 @@ This agent is a sequential agent composed of two sub-agents that work together t
 
 1.  **Prerequisites**
 
-    *   Python 3.11+
-    *   [Poetry](https://python-poetry.org/docs/) for dependency management.
+    *   Python 3.10
+    *   [uv website](https://docs.astral.sh/uv/) for installation.
     *   A Google Cloud Platform project.
     *   The [Google Cloud CLI](https://cloud.google.com/sdk/docs/install).
 
@@ -49,7 +49,7 @@ This agent is a sequential agent composed of two sub-agents that work together t
     # Navigate to the agent's directory
     cd adk-samples/python/agents/google-trends-agent
     # Install the package and dependencies.
-    poetry install
+    uv sync
     ```
 
 3.  **Configuration**
@@ -92,7 +92,7 @@ You can run the agent locally using the `adk` command in your terminal.
 
 1.  **Activate the virtual environment:**
     ```bash
-    poetry shell
+    uv run
     ```
 
 2.  **To run the agent from the CLI:**
@@ -184,3 +184,22 @@ You can customize this agent to fit your specific needs:
 *   **Change Data Source:** Modify the agent's tools to pull trend data from different sources, such as social media APIs or other analytics platforms.
 *   **Enhance Analysis:** Add new tools to perform more in-depth analysis on the trends, deeper research (e.g. using Google Search as an additional tool) such as sentiment analysis or forecasting.
 *   **Add Notifications:** Integrate tools that send alerts via email or Slack when a new trend matching specific criteria is detected.
+
+### Alternative: Using Agent Starter Pack
+You can also use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:
+```bash
+# Create and activate a virtual environment
+python -m venv .venv && source .venv/bin/activate # On Windows: .venv\Scripts\activate
+# Install the starter pack and create your project
+pip install --upgrade agent-starter-pack
+agent-starter-pack create my-google-trends-agent -a adk@google-trends
+```
+<details>
+<summary>⚡️ Alternative: Using uv</summary>
+If you have [`uv`](https://github.com/astral-sh/uv) installed, you can create and set up your project with a single command:
+```bash
+uvx agent-starter-pack create my-google-trends-agent -a adk@google-trends
+```
+This command handles creating the project without needing to pre-install the package into a virtual environment.
+</details>
+The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
