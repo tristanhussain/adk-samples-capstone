@@ -47,6 +47,11 @@ ignore = ["PLC0414"]
 # CRITICAL: Ensures the trends agent source is treated as first-party
 known-first-party = ["google_trends_agent", "app"]
 
+[tool.hatch.build.targets.wheel]
+# Maps the package source. Update "app" to your specific folder name if different.
+packages = ["google_trends_agent", "app"]
+
+
 [build-system]
 requires = ["uv_build>=0.8.14,<0.9.0"]
 build-backend = "uv_build"
