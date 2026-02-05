@@ -22,6 +22,7 @@ dev = [
     "agent-starter-pack>=0.32.0",
     "pytest>=8.0.0",
     # google-adk is already in main dependencies
+    "ruff>=0.15.0",
 ]
 deployment = [
     "absl-py>=2.2.2",
