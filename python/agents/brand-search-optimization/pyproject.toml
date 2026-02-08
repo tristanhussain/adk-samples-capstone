@@ -3,7 +3,7 @@ name = "brand-search-optimization"
 version = "0.1.0"
 description = "Brand Search Optimization ADK Agent Designed to enhance product titles for retail brand search. It retrieves top keywords, performs searches, and analyzes top results to provide suggestions for enriching product titles"
 authors = [{ name = "Nikhil Kulkarni", email = "nikhilkul@google.com" }]
-license = {text = "Apache License 2.0"}
+license = "Apache-2.0"
 readme = "README.md"
 requires-python = ">=3.11"
 
@@ -18,11 +18,12 @@ dependencies = [
     "google-adk>=1.0.0,<2.0.0",
 ]
 
-[dependency-groups]
+[project.optional-dependencies]
 dev = [
     "google-adk[eval]>=1.0.0",
     "pytest-asyncio>=0.26.0",
     "pytest>=8.3.5",
+    "agent-starter-pack>=0.14.1",
 ]
 
 [tool.ruff]
@@ -44,6 +45,12 @@ known-first-party = ["brand_search_optimization", "app"]
 [tool.hatch.build.targets.wheel]
 # Ensures Hatchling bundles the correct source directories
 packages = ["brand_search_optimization", "app"]
+
+[tool.agent-starter-pack]
+example_question = "Can you suggest a better title for 'Apple AirPods Pro'?"
+
+[tool.agent-starter-pack.settings]
+agent_directory = "brand_search_optimization"
 
 [build-system]
 requires = ["hatchling"]
