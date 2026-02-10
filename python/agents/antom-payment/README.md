@@ -102,14 +102,13 @@ Let me know if you want help generating a real payment link using a specific ser
 
 You can also use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:
 
-```bash
+````bash
 # Create and activate a virtual environment
 python -m venv .venv && source .venv/bin/activate # On Windows: .venv\Scripts\activate
 
 # Install the starter pack and create your project
 pip install --upgrade agent-starter-pack
-agent-starter-pack create my-parallel-task-decomposition-agent -a adk@parallel-task-decomposition-agent
-```
+agent-starter-pack create my-antom-payment-agent -a adk@antom-payment-agent
 
 <details>
 <summary>⚡️ Alternative: Using uv</summary>
@@ -117,8 +116,8 @@ agent-starter-pack create my-parallel-task-decomposition-agent -a adk@parallel-t
 If you have [`uv`](https://github.com/astral-sh/uv) installed, you can create and set up your project with a single command:
 
 ```bash
-uvx agent-starter-pack create my-parallel-task-decomposition-agent -a adk@parallel-task-decomposition-agent
-```
+uvx agent-starter-pack create my-antom-payment-agent -a adk@antom-payment-agent
+````
 
 This command handles creating the project without needing to pre-install the package into a virtual environment.
 
