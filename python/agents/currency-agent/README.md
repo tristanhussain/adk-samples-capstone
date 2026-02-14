@@ -36,7 +36,7 @@ ADK (v1.0.0) is used as the orchestration framework for creating our currency ag
 
 > Agent2Agent (A2A) protocol addresses a critical challenge in the AI landscape: enabling gen AI agents, built on diverse frameworks by different companies running on separate servers, to communicate and collaborate effectively - as agents, not just as tools. A2A aims to provide a common language for agents, fostering a more interconnected, powerful, and innovative AI ecosystem. - [A2A](https://github.com/a2aproject/A2A)
 
-The new [A2A Python SDK](https://github.com/google-a2a/a2a-python) is used to create an A2A server that advertises and executes our ADK agent. We then run an A2A client that connects to our A2A server and invokes our ADK agent. 
+The new [A2A Python SDK](https://github.com/google-a2a/a2a-python) is used to create an A2A server that advertises and executes our ADK agent. We then run an A2A client that connects to our A2A server and invokes our ADK agent.
 
 ## Getting Started
 
@@ -74,13 +74,13 @@ There are two different ways to call Gemini models:
 - Calling the Gemini API directly using an API key created via Google AI Studio.
 - Calling Gemini models through Vertex AI APIs on Google Cloud.
 
-> [!TIP] 
+> [!TIP]
 > An API key from Google AI Studio is the quickest way to get started.
-> 
+>
 > Existing Google Cloud users may want to use Vertex AI.
 
 <details open>
-<summary>Gemini API Key</summary> 
+<summary>Gemini API Key</summary>
 
 Get an API Key from Google AI Studio: https://aistudio.google.com/apikey
 
@@ -108,6 +108,7 @@ gcloud services enable aiplatform.googleapis.com
 ```
 
 Create a `.env` file by running the following (replace `<your_project_id>` with your project ID):
+
 ```sh
 echo "GOOGLE_GENAI_USE_VERTEXAI=TRUE" >> .env \
 && echo "GOOGLE_CLOUD_PROJECT=<your_project_id>" >> .env \
@@ -151,3 +152,5 @@ Contributions are welcome! Please feel free to submit pull requests or open issu
 ## 📄 License
 
 This project is licensed under the Apache 2.0 License - see the [LICENSE file](LICENSE) for details.
+
+### Alternative: Using Agent Starter PackYou can also use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:`bash# Create and activate a virtual environmentpython -m venv .venv && source .venv/bin/activate # On Windows: .venv\Scripts\activate# Install the starter pack and create your projectpip install --upgrade agent-starter-packagent-starter-pack create my-parallel-task-decomposition -a adk@parallel-task-decomposition-execution`<details><summary>⚡️ Alternative: Using uv</summary>If you have [`uv`](https://github.com/astral-sh/uv) installed, you can create and set up your project with a single command:`bashuvx agent-starter-pack create my-parallel-task-decomposition -a adk@parallel-task-decomposition-execution`This command handles creating the project without needing to pre-install the package into a virtual environment.</details>The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
