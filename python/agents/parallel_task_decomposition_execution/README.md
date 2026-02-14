@@ -8,9 +8,9 @@ The goal of this agent is to show how the agent decomposes a single complex goal
 
 **Example Use Cases:**
 
-- Sending an "all-hands" meeting announcement to multiple Slack channels, a company-wide email, and creating a corresponding calendar event.
-- Broadcasting a critical incident report (e.g., "Service X outage, estimated fix in 2 hours") to relevant engineering channels and an internal status email.
-- Pushing a product update notification to key team channels.
+* Sending an "all-hands" meeting announcement to multiple Slack channels, a company-wide email, and creating a corresponding calendar event.
+* Broadcasting a critical incident report (e.g., "Service X outage, estimated fix in 2 hours") to relevant engineering channels and an internal status email.
+* Pushing a product update notification to key team channels.
 
 ---
 > **Note on Tools: For Inspiration, Not Production**
@@ -65,7 +65,6 @@ The goal of this agent is to show how the agent decomposes a single complex goal
 
     Install the agent's requirements:
 
-   
     This is a one-time setup.
     ```bash
     uv sync --dev
@@ -116,7 +115,6 @@ The logs from the agent will display on the console in real time as it runs.
 ### Example Interaction
 
 Begin the interaction by typing "Hello". The agent will then prompt you for a topic. Add in a topic that you'd like to research and then broadcast to your team across multiple communication channels.
-
 
 ## Disclaimer
 
