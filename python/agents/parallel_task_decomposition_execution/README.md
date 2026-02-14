@@ -8,11 +8,12 @@ The goal of this agent is to show how the agent decomposes a single complex goal
 
 **Example Use Cases:**
 
-*   Sending an "all-hands" meeting announcement to multiple Slack channels, a company-wide email, and creating a corresponding calendar event.
-*   Broadcasting a critical incident report (e.g., "Service X outage, estimated fix in 2 hours") to relevant engineering channels and an internal status email.
-*   Pushing a product update notification to key team channels.
+- Sending an "all-hands" meeting announcement to multiple Slack channels, a company-wide email, and creating a corresponding calendar event.
+- Broadcasting a critical incident report (e.g., "Service X outage, estimated fix in 2 hours") to relevant engineering channels and an internal status email.
+- Pushing a product update notification to key team channels.
 
 ---
+
 > **Note on Tools: For Inspiration, Not Production**
 >
 > The goal of this agent is to demonstrate an agentic workflow, not to be a drop-in, production-ready solution. By default, it uses **mock tools** that only simulate actions (like sending a Slack message).
@@ -20,18 +21,21 @@ The goal of this agent is to show how the agent decomposes a single complex goal
 > This approach allows you to quickly clone the repository and see the agent's flow in action without a complicated setup process. In a real-world scenario, you would replace these mock tools with connections to actual services like Discord, Notion, or Google Services, etc and you would also want to customize the prompts to fit your needs.
 >
 > The code for connecting to real services (Slack, Gmail, and Calendar) via MCP is included but commented out in `agent.py` and `tools.py` to serve as a starting point.
+
 ---
 
 ## Agent Details
-| Feature | Description |
-| --- | --- |
-| *Interaction Type* | Workflow |
-| *Complexity* | Intermediate |
-| *Agent Type* | Multi-Agent |
-| *Components* | Tools |
-| *Vertical* | General |
+
+| Feature            | Description  |
+| ------------------ | ------------ |
+| _Interaction Type_ | Workflow     |
+| _Complexity_       | Intermediate |
+| _Agent Type_       | Multi-Agent  |
+| _Components_       | Tools        |
+| _Vertical_         | General      |
 
 ## Setup and Installation
+
 1.  **Prerequisites:**
 
     **Google Cloud SDK and GCP Project:**
@@ -40,11 +44,14 @@ The goal of this agent is to show how the agent decomposes a single complex goal
     a Google Cloud Project. Once you have created your project,
     [install the Google Cloud SDK](https://cloud.google.com/sdk/docs/install).
     Then run the following command to authenticate with your project:
+
     ```bash
     gcloud auth login
     ```
+
     You also need to enable certain APIs. Run the following command to enable
     the required APIs:
+
     ```bash
     gcloud services enable aiplatform.googleapis.com
     ```
@@ -52,14 +59,15 @@ The goal of this agent is to show how the agent decomposes a single complex goal
 2.  **Installation:**
 
     Clone this repository and change to the repo directory:
+
     ```
     git clone https://github.com/google/adk-samples.git
     cd adk-samples/python/agents/parallel_task_decomposition_execution
     ```
 
-    Install [Poetry](https://python-poetry.org)
-
+    Install [uv](https://docs.astral.sh/uv/)
     If you have not installed poetry before, you can do so by running:
+
     ```bash
     pip install poetry
     ```
@@ -67,10 +75,13 @@ The goal of this agent is to show how the agent decomposes a single complex goal
     Install the agent's requirements:
 
     **Note for Linux users:** If you get an error related to `keyring` during the installation, you can disable it by running the following command:
+
     ```bash
     poetry config keyring.enabled false
     ```
+
     This is a one-time setup.
+
     ```bash
     poetry install
     ```
@@ -88,11 +99,13 @@ The goal of this agent is to show how the agent decomposes a single complex goal
     Once you have created your `.env` file, if you're using the `bash` shell,
     run the following command to export the variables from the `.env` file into your
     local shell environment:
+
     ```bash
     set -o allexport
     . .env
     set +o allexport
     ```
+
     If you aren't using `bash`, you may need to export the variables manually.
 
 ## Running the Agent
@@ -100,6 +113,7 @@ The goal of this agent is to show how the agent decomposes a single complex goal
 **Using the ADK command line:**
 
 From the `parallel_task_decomposition_execution` directory, run this command:
+
 ```bash
 adk run parallel_task_decomposition_agent
 ```
@@ -107,9 +121,11 @@ adk run parallel_task_decomposition_agent
 **Using the ADK Dev UI:**
 
 From the `parallel_task_decomposition_execution` directory, run this command:
+
 ```bash
 adk web .
 ```
+
 It will display a URL for the demo UI (the default is http://127.0.0.1:8000). Go to that URL.
 
 The UI will be blank initially. In the dropdown at the top left, choose `parallel_task_decomposition_agent`
@@ -120,7 +136,6 @@ The logs from the agent will display on the console in real time as it runs.
 ### Example Interaction
 
 Begin the interaction by typing "Hello". The agent will then prompt you for a topic. Add in a topic that you'd like to research and then broadcast to your team across multiple communication channels.
-
 
 ## Disclaimer
 
