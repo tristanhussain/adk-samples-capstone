@@ -38,7 +38,7 @@ logger = logging.getLogger("google_adk." + __name__)
 
 email_drafting_agent = SequentialAgent(
     name="email_drafting_agent",
-    description="Drafts and sends an email announcement.",
+    description="Drafts and sends an email announcement",
     sub_agents=[
         Agent(
             name="email_drafter",
