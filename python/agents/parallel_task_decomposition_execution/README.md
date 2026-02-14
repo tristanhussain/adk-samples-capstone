@@ -57,22 +57,16 @@ The goal of this agent is to show how the agent decomposes a single complex goal
     cd adk-samples/python/agents/parallel_task_decomposition_execution
     ```
 
-    Install [Poetry](https://python-poetry.org)
+    Install [uv](https://docs.astral.sh/uv/)
 
-    If you have not installed poetry before, you can do so by running:
+    If you have not installed `uv` before, you can do so by running:
     ```bash
-    pip install poetry
+    curl -LsSf https://astral.sh/uv/install.sh | sh
     ```
 
     Install the agent's requirements:
-
-    **Note for Linux users:** If you get an error related to `keyring` during the installation, you can disable it by running the following command:
     ```bash
-    poetry config keyring.enabled false
-    ```
-    This is a one-time setup.
-    ```bash
-    poetry install
+    uv sync --dev
     ```
 
     This will also install the released version of 'google-adk', the Google Agent Development Kit.
@@ -129,3 +123,29 @@ This agent sample is provided for illustrative purposes only and is not intended
 This sample has not been rigorously tested, may contain bugs or limitations, and does not include features or optimizations typically required for a production environment (e.g., robust error handling, security measures, scalability, performance considerations, comprehensive logging, or advanced configuration options).
 
 Users are solely responsible for any further development, testing, security hardening, and deployment of agents based on this sample. We recommend thorough review, testing, and the implementation of appropriate safeguards before using any derived agent in a live or critical system.
+
+### Alternative: Using Agent Starter Pack
+
+You can also use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:
+
+```bash
+# Create and activate a virtual environment
+python -m venv .venv && source .venv/bin/activate # On Windows: .venv\Scripts\activate
+
+# Install the starter pack and create your project
+pip install --upgrade agent-starter-pack
+agent-starter-pack create my-parallel-task-decomposition -a adk@parallel-task-decomposition-execution
+```
+
+<details>
+<summary>⚡️ Alternative: Using uv</summary>
+
+If you have [`uv`](https://github.com/astral-sh/uv) installed, you can create and set up your project with a single command:
+```bash
+uvx agent-starter-pack create my-parallel-task-decomposition -a adk@parallel-task-decomposition-execution
+```
+This command handles creating the project without needing to pre-install the package into a virtual environment.
+
+</details>
+
+The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
