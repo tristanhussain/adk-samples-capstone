@@ -31,16 +31,15 @@ A comprehensive data engineering agent.
 ## Setup and Installation
 
 1.  **Prerequisites**
+    *   Python 3.10+
+    *   uv
+      *   For dependency management and packaging. Please follow the
+        instructions on the official
+        [uv website](https://docs.astral.sh/uv/) for installation.
 
-    *   Python 3.11+
-    *   Poetry
-        *   For dependency management and packaging. Please follow the
-            instructions on the official
-            [Poetry website](https://python-poetry.org/docs/) for installation.
-
-        ```bash
-        pip install poetry
-        ```
+      ```bash
+      curl -LsSf https://astral.sh/uv/install.sh | sh
+      ```
 
     * A project on Google Cloud Platform
     * Google Cloud CLI
@@ -55,7 +54,7 @@ A comprehensive data engineering agent.
     cd adk-samples/python/agents/data-engineering
 
     # Install the package and dependencies.
-    poetry install
+    uv sync
     ```
 
 3.  **Configuration** 
@@ -122,15 +121,15 @@ A comprehensive data engineering agent.
 For running tests and evaluation, install the extra dependencies:
 
 ```bash
-poetry install --with dev
+uv sync --group dev
 ```
 
 Then the tests and evaluation can be run from the `financial-advisor` directory using
 the `pytest` module:
 
 ```bash
-python3 -m pytest tests
-python3 -m pytest eval
+uv run pytest tests
+uv run pytest eval
 ```
 
 `tests` runs the agent on a sample request, and makes sure that every component
@@ -144,8 +143,8 @@ The Financial Advisor can be deployed to Vertex AI Agent Engine using the follow
 commands:
 
 ```bash
-poetry install --with deployment
-python3 deployment/deploy.py --create
+uv sync --group deployment
+uv run deployment/deploy.py --create
 ```
 
 When the deployment finishes, it will print a line like this:
@@ -157,7 +156,7 @@ Created remote agent: projects/<PROJECT_NUMBER>/locations/<PROJECT_LOCATION>/rea
 If you forgot the AGENT_ENGINE_ID, you can list existing agents using:
 
 ```bash
-python3 deployment/deploy.py --list
+uv run deployment/deploy.py --list
 ```
 
 The output will be like:
@@ -173,7 +172,7 @@ All remote agents:
 You may interact with the deployed agent using the `test_deployment.py` script
 ```bash
 $ export USER_ID=<any string>
-$ python3 deployment/test_deployment.py --resource_id=${AGENT_ENGINE_ID} --user_id=${USER_ID}
+$ uv run deployment/test_deployment.py --resource_id=${AGENT_ENGINE_ID} --user_id=${USER_ID}
 Found agent with resource ID: ...
 Created session for user ID: ...
 Type 'quit' to exit.
@@ -184,8 +183,36 @@ Response:
 To delete the deployed agent, you may run the following command:
 
 ```bash
-python3 deployment/deploy.py --delete --resource_id=${AGENT_ENGINE_ID}
+uv run deployment/deploy.py --delete --resource_id=${AGENT_ENGINE_ID}
 ```
+
+### Alternative: Using Agent Starter Pack
+
+You can also use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:
+
+```bash
+# Create and activate a virtual environment
+python -m venv .venv && source .venv/bin/activate # On Windows: .venv\Scripts\activate
+
+# Install the starter pack and create your project
+pip install --upgrade agent-starter-pack
+agent-starter-pack create my-data-engineering-agent -a adk@data-engineering-agent
+```
+
+<details>
+<summary>⚡️ Alternative: Using uv</summary>
+
+If you have [`uv`](https://github.com/astral-sh/uv) installed, you can create and set up your project with a single command:
+
+```bash
+uvx agent-starter-pack create my-data-engineering-agent -a adk@data-engineering-agent
+```
+
+This command handles creating the project without needing to pre-install the package into a virtual environment.
+
+</details>
+
+The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
 
 # License
    Copyright 2025 Google LLC
