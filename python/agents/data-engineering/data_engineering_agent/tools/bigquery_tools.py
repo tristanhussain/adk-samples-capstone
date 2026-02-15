@@ -74,7 +74,7 @@ def get_udf_sp_tool(dataset_id: str, routine_type: str | None = None) -> str:
     client = get_bigquery_client()
 
     query = f"""
-        SELECT 
+        SELECT
             routine_name,
             routine_type,
             routine_body,
@@ -108,11 +108,7 @@ def get_udf_sp_tool(dataset_id: str, routine_type: str | None = None) -> str:
 
     except Exception as e:
         return json.dumps(
-            {
-                "error": (
-                    f"Error retrieving routines from dataset '{dataset_id}': {e}"
-                )
-            },
+            {"error": (f"Error retrieving routines from dataset '{dataset_id}': {e}")},
             indent=2,
         )
 
@@ -214,9 +210,7 @@ def sample_table_data_tool(
         client = get_bigquery_client()
 
         # Build the query with optional random seed
-        seed_clause = (
-            f"SET @seed = {random_seed};" if random_seed is not None else ""
-        )
+        seed_clause = f"SET @seed = {random_seed};" if random_seed is not None else ""
         query = f"""
             {seed_clause}
             SELECT *
