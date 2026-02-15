@@ -114,9 +114,7 @@ def compile_dataform(compile_only: bool = False) -> dict[str, Any]:
             parent=repository_path, compilation_result=compilation_result
         )
 
-        compilation_results = DATAFORM_CLIENT.create_compilation_result(
-            request=request
-        )
+        compilation_results = DATAFORM_CLIENT.create_compilation_result(request=request)
 
         if compilation_results.compilation_errors:
             print("Compilation errors found!")
@@ -246,22 +244,13 @@ def get_dataform_execution_logs(workflow_invocation_id: str) -> dict[str, Any]:
             action_detail = {
                 "name": action.target.name,
                 "status": (
-                    dataform_v1.WorkflowInvocationAction.State(
-                        action.state
-                    ).name
+                    dataform_v1.WorkflowInvocationAction.State(action.state).name
                 ),
             }
-            if (
-                action.state
-                == dataform_v1.WorkflowInvocationAction.State.FAILED
-            ):
+            if action.state == dataform_v1.WorkflowInvocationAction.State.FAILED:
                 action_detail["error_message"] = action.failure_reason
-            if (
-                action.canonical_target.name
-            ):  # Check if canonical_target has name
-                action_detail["canonical_target_name"] = (
-                    action.canonical_target.name
-                )
+            if action.canonical_target.name:  # Check if canonical_target has name
+                action_detail["canonical_target_name"] = action.canonical_target.name
             if action.bigquery_action:  # Check if bigquery_action exists
                 action_detail["job_id"] = action.bigquery_action.job_id
 
@@ -293,9 +282,7 @@ def get_dataform_execution_logs(workflow_invocation_id: str) -> dict[str, Any]:
         return {"status": "success", "actions": actions_details}
 
     except GoogleAPIError as e:
-        print(
-            f"Error getting execution logs for '{workflow_invocation_id}': {e}"
-        )
+        print(f"Error getting execution logs for '{workflow_invocation_id}': {e}")
         return {
             "status": "error",
             "error_message": (
@@ -329,8 +316,8 @@ def execute_dataform_workflow(
 
         # Add parameters if provided
         if params:
-            workflow_invocation.invocation_config = (
-                dataform_v1.InvocationConfig(parameters=params)
+            workflow_invocation.invocation_config = dataform_v1.InvocationConfig(
+                parameters=params
             )
 
         request = dataform_v1.CreateWorkflowInvocationRequest(

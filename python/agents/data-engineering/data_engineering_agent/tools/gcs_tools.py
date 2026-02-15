@@ -53,13 +53,9 @@ def validate_bucket_exists_tool(bucket_name: str) -> dict[str, Any]:
                 "bucket_name": bucket_name,
                 "metadata": {
                     "created": (
-                        bucket.time_created.isoformat()
-                        if bucket.time_created
-                        else None
+                        bucket.time_created.isoformat() if bucket.time_created else None
                     ),
-                    "updated": bucket.updated.isoformat()
-                    if bucket.updated
-                    else None,
+                    "updated": bucket.updated.isoformat() if bucket.updated else None,
                     "location": bucket.location,
                     "storage_class": bucket.storage_class,
                     "labels": bucket.labels,
@@ -76,9 +72,7 @@ def validate_bucket_exists_tool(bucket_name: str) -> dict[str, Any]:
         return {"status": "error", "error": str(e)}
 
 
-def validate_file_exists_tool(
-    bucket_name: str, file_path: str
-) -> dict[str, Any]:
+def validate_file_exists_tool(bucket_name: str, file_path: str) -> dict[str, Any]:
     """Validate if a file exists in a GCS bucket.
 
     Args:
@@ -105,13 +99,9 @@ def validate_file_exists_tool(
                     "size": blob.size,
                     "content_type": blob.content_type,
                     "created": (
-                        blob.time_created.isoformat()
-                        if blob.time_created
-                        else None
+                        blob.time_created.isoformat() if blob.time_created else None
                     ),
-                    "updated": blob.updated.isoformat()
-                    if blob.updated
-                    else None,
+                    "updated": blob.updated.isoformat() if blob.updated else None,
                     "md5_hash": blob.md5_hash,
                     "generation": blob.generation,
                 },
@@ -168,13 +158,9 @@ def list_bucket_files_tool(
                         "size": blob.size,
                         "content_type": blob.content_type,
                         "created": (
-                            blob.time_created.isoformat()
-                            if blob.time_created
-                            else None
+                            blob.time_created.isoformat() if blob.time_created else None
                         ),
-                        "updated": blob.updated.isoformat()
-                        if blob.updated
-                        else None,
+                        "updated": blob.updated.isoformat() if blob.updated else None,
                     }
                 )
             else:
