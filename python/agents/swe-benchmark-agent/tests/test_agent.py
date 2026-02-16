@@ -26,18 +26,24 @@ class MockEnvironment:
         self.instance = instance
         self.commands_executed = []
 
-    def execute(self, command: str) -> tuple[int, str]:
+    def execute(self, command: str, demux: bool = False) -> tuple:
         """Mock command execution."""
         self.commands_executed.append(command)
 
         # Mock responses for different commands
         if command.startswith("cat"):
-            return 0, "def hello():\n    print('Hello, World!')\n"
-        if command.startswith("ls"):
-            return 0, "test.py\nREADME.md\n"
+            output = "def hello():\n    print('Hello, World!')\n"
+            return (0, (output, "")) if demux else (0, output)
+        if command.startswith("ls") or "ls -la" in command:
+            output = "test.py\nREADME.md\n"
+            return (0, (output, "")) if demux else (0, output)
         if "git diff" in command:
-            return 0, "diff --git a/test.py b/test.py\n"
-        return 0, ""
+            output = "diff --git a/test.py b/test.py\n"
+            return (0, (output, "")) if demux else (0, output)
+        if "git status" in command:
+            output = "src/main.py\n"
+            return (0, (output, "")) if demux else (0, output)
+        return (0, ("", "")) if demux else (0, "")
 
     def copy_to(self, src: str, dest: str) -> None:
         """Mock file copy."""
@@ -86,11 +92,11 @@ class TestSweAgent(unittest.TestCase):
         self.assertEqual(orchestrator.benchmark_type, "terminalbench")
         self.assertEqual(orchestrator.working_dir, "/app")
 
-    def test_read_file_range(self) -> None:
-        """Test reading a file range."""
+    def test_read_file(self) -> None:
+        """Test reading a file."""
         orchestrator = Orchestrator(self.mock_env, benchmark_type="swebench")
 
-        result = orchestrator.read_file_range(
+        result = orchestrator.read_file(
             "test.py", start_line=1, end_line=2
         )
 
@@ -115,13 +121,17 @@ class TestSweAgent(unittest.TestCase):
         """Test submission for swebench."""
         orchestrator = Orchestrator(self.mock_env, benchmark_type="swebench")
 
+        # First submit triggers verification prompt when turn_count < 40
         result = orchestrator.submit()
-
-        self.assertEqual(result, "Submitted successfully.")
-        self.assertIsNotNone(orchestrator.patch)
+        self.assertIn("verify", result.lower())
         self.assertTrue(
             any("git diff" in cmd for cmd in self.mock_env.commands_executed)
         )
+
+        # Second submit completes successfully
+        result = orchestrator.submit()
+        self.assertIn("Submitted successfully.", result)
+        self.assertIsNotNone(orchestrator.patch)
 
     def test_create_file(self) -> None:
         """Test creating a new file."""
