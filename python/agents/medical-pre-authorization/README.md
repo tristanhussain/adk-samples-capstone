@@ -44,6 +44,19 @@ This diagram shows the detailed architecture of the agents and tools used
 to implement this workflow.
 <img src="pre-auth-ai-agent-architrecture.png" alt="Medical Pre-Authurization Agent" width="800"/>
 
+## Using Agent Starter Pack (ASP)
+
+Use the **Agent Starter Pack** to scaffold a production-ready version of this agent with additional deployment and configuration options.
+
+Create and activate a virtual environment:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+# Windows:
+.venv\Scripts\activate
+```
+
 ## Setup and Installation
 
 1.  **Prerequisites**
@@ -129,20 +142,7 @@ Hello! I'm a pre-authorization agent. I can help you process pre-authorization r
 
 ```
 
-## Alternative: Using Agent Starter Pack (ASP)
-
-You can also use the **Agent Starter Pack** to scaffold a production-ready version of this agent with additional deployment and configuration options.
-
-Create and activate a virtual environment:
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-# Windows:
-.venv\Scripts\activate
-```
-
-### Example Interaction
+## Example Interaction
 
 Below is an example interaction with the Medical Pre-Authorization Agent. 
 
