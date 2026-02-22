@@ -1,68 +1,57 @@
-# Using ADK Agent with τ-bench
+# Tau2-Bench Agent
 
-This guide provides instructions on how to set up and use a custom agent that integrates with the Google ADK (Agent Development Kit) within the τ-bench framework.
+## Overview
 
-## 1. Clone the Repository
+The Tau2-Bench Agent integrates with the [τ-bench](https://github.com/sierra-research/tau2-bench) framework using the Google Agent Development Kit (ADK). It is designed to evaluate agent performance across real-world customer service domains (airline, retail, telecom) by running structured benchmark simulations.
 
-First, clone the specific version of the τ-bench repository that is compatible with these modifications.
+This sample is compatible with the Agent Starter Pack (ASP) and can be used as a base for creating production-ready agent deployments.
+
+## Agent Details
+
+| Feature | Description |
+| --- | --- |
+| **Interaction Type** | Autonomous |
+| **Complexity** | Advanced |
+| **Agent Type** | Single Agent |
+| **Components** | Tools, Built-in Planner |
+| **Vertical** | Benchmarking / Evaluation |
+
+## Using Agent Starter Pack (ASP)
+
+Use the **Agent Starter Pack** to scaffold a production-ready version of this agent with additional deployment and configuration options.
+
+Create and activate a virtual environment:
 
 ```bash
-git clone https://github.com/sierra-research/tau2-bench.git
-cd tau2-bench
-git checkout cc97b34
-```
-
-## 2. Setup and Installation
-
-Follow the standard installation instructions to set up the environment for the project.
-
-
-Ensure that you have venv:
-
-```bash
-sudo apt install python3.13-venv
-```
-
-```bash
-python3 -m venv .venv
+python -m venv .venv
 source .venv/bin/activate
-
-pip install -e .
+# Windows:
+.venv\Scripts\activate
 ```
 
-You can check tau data:
+## Setup and Installation
+
+### Prerequisites
+
+- Python 3.10+
+- [uv](https://docs.astral.sh/uv/getting-started/installation/) — fast Python package manager
+- A project on Google Cloud Platform
+- [Google Cloud CLI](https://cloud.google.com/sdk/docs/install)
+
+### Installation
 
 ```bash
-tau2 check-data
+# Clone this repository
+git clone https://github.com/google/adk-samples.git
+cd adk-samples/python/agents/tau2-benchmark-agent
+
+# Sync dependencies (tau2-bench is pulled from GitHub automatically)
+uv sync
 ```
 
-After the standard installation, you need to install the Google ADK package.
+### Configuration
 
-```bash
-pip install google-adk
-```
-
-tenacity dependecy version may conflict with that of tau2 repo. Upgrading it back in favor of tau2.
-
-```bash
-pip install --upgrade tenacity
-```
-
-**IMPORTANT:** Gemini 3 Pro model makes sending thought signatures mandatory. Tau2 bench relies on litellm for user simulation and non-adk agent simulation. Until https://github.com/BerriAI/litellm/pull/16812 is merged to litellm repository, the PR needs to be applied as shown below:
-
-```bash
-git clone --filter=blob:none --quiet https://github.com/BerriAI/litellm.git /tmp/litellm-pr-16812
-cd /tmp/litellm-pr-16812
-git checkout -q pull/16812/head
-git fetch origin pull/16812/head:pr-16812
-git checkout pr-16812
-pip install .
-cd -
-```
-
-## 3. Add env params
-
-Create `.env` file at root with the following content.
+Create a `.env` file in the project root:
 
 ```bash
 GOOGLE_GENAI_USE_VERTEXAI=true
@@ -71,51 +60,101 @@ GOOGLE_CLOUD_LOCATION=global
 VERTEXAI_LOCATION=global
 ```
 
-## 4. Copy Modified Files
-
-You will need to copy two files into your local `tau2-bench` directory. These files contain the implementation of the ADK agent and its unit tests.
-
-Assuming you have the following files available:
-
-*   `tau2_agent/adk_agent.py`
-*   `tests/test_adk_agent.py`
-
-Copy them to the correct locations within the project:
+Authenticate with Google Cloud:
 
 ```bash
-cp ../tau2_agent/adk_agent.py src/tau2/agent/adk_agent.py
-cp ../tests/test_adk_agent.py tests/test_adk_agent.py
+gcloud auth application-default login
+gcloud auth application-default set-quota-project $GOOGLE_CLOUD_PROJECT
 ```
 
-## 4.1. Registering the ADK Agent
+## Registering the ADK Agent with τ-bench
 
-To enable the `adk_agent` within the `tau2-bench` framework, you need to manually modify the `src/tau2/registry.py` file in your `tau2-bench` repository.
+The `AdkAgent` must be registered in the τ-bench framework's registry. Add the following to `src/tau2/registry.py` inside the `tau2-bench` installation (found in the `.venv`):
 
-1.  **Add the import statement** for `AdkAgent` at the top of `src/tau2/registry.py`:
-    ```python
-    from tau2.agent.adk_agent import AdkAgent
-    ```
-2.  **Register the agent** within the `try` block where other default components are registered (look for `registry = Registry()`):
-    ```python
-    try:
-        registry = Registry()
-        logger.debug("Registering default components...")
-        # ... existing registrations ...
-        registry.register_agent(AdkAgent, "adk_agent") # Add this line
-        # ... more existing registrations ...
-    ```
-    This allows the `adk_agent` to be selected via command-line arguments (e.g., `--agent adk_agent`).
+1. Add the import at the top:
 
-## 5. Running the ADK Agent
+```python
+from tau2.agent.adk_agent import AdkAgent
+```
 
-Once the files are in place and dependencies are installed, you can run a simulation using the `adk_agent`.
+2. Register the agent in the `try` block:
 
-### Changing baseline ADK agent
+```python
+registry.register_agent(AdkAgent, "adk_agent")
+```
 
-You can implement an improved agent and replace `AdkLlmAgent` implementation `_create_agent` returns as shown below. Return type is BaseAgent which accommodates workflow agents as well.
+## Running the Agent
 
-```py
-def _create_agent(name: str, model: Union[str, BaseLlm], instruction: str, tools: List[Tool]) -> BaseAgent:
+### Limited run (single task)
+
+```bash
+uv run tau2 run \
+  --domain airline \
+  --agent adk_agent \
+  --agent-llm vertex_ai/gemini-2.5-pro \
+  --user-llm vertex_ai/gemini-2.5-pro \
+  --num-trials 1 \
+  --num-tasks 1
+```
+
+### Full evaluation run
+
+```bash
+# Retail domain
+uv run tau2 run \
+  --domain retail \
+  --agent adk_agent \
+  --agent-llm vertex_ai/gemini-3-pro-preview \
+  --user-llm vertex_ai/gemini-3-pro-preview \
+  --num-trials 4 \
+  --save-to gemini_3_pro_retail \
+  --user-llm-args '{"temperature": 1, "reasoning_effort": "high"}' \
+  --agent-llm-args '{"temperature": 1, "reasoning_effort": "high"}'
+
+# Airline domain
+uv run tau2 run \
+  --domain airline \
+  --agent adk_agent \
+  --agent-llm vertex_ai/gemini-3-pro-preview \
+  --user-llm vertex_ai/gemini-3-pro-preview \
+  --num-trials 4 \
+  --save-to gemini_3_pro_airline \
+  --user-llm-args '{"temperature": 1, "reasoning_effort": "high"}' \
+  --agent-llm-args '{"temperature": 1, "reasoning_effort": "high"}'
+
+# Telecom domain
+uv run tau2 run \
+  --domain telecom \
+  --agent adk_agent \
+  --agent-llm vertex_ai/gemini-3-pro-preview \
+  --user-llm vertex_ai/gemini-3-pro-preview \
+  --num-trials 4 \
+  --save-to gemini_3_pro_telecom \
+  --user-llm-args '{"temperature": 1, "reasoning_effort": "high"}' \
+  --agent-llm-args '{"temperature": 1, "reasoning_effort": "high"}'
+```
+
+### View trajectories
+
+```bash
+uv run tau2 view
+```
+
+### Prepare submission package
+
+```bash
+uv run tau2 submit prepare data/tau2/simulations/gemini_3_pro_*.json \
+  --output ./gemini_3_pro_submission
+```
+
+## Customizing the Agent
+
+You can swap out the underlying ADK agent implementation by modifying `_create_agent` in `tau2_agent/adk_agent.py`:
+
+```python
+def _create_agent(
+    name: str, model: Union[str, BaseLlm], instruction: str, tools: List[Tool]
+) -> BaseAgent:
     adk_tools = [
         AdkTool(
             types.FunctionDeclaration(
@@ -137,99 +176,20 @@ def _create_agent(name: str, model: Union[str, BaseLlm], instruction: str, tools
     )
 ```
 
-### Limited run
-
-Here is an example command to run the agent on an airline domain task:
+## Running Tests
 
 ```bash
-tau2 run --domain airline --agent adk_agent --agent-llm vertex_ai/gemini-3-pro-preview --user-llm vertex_ai/gemini-3-pro-preview --num-trials 1 --num-tasks 1 --user-llm-args '{"temperature": 1, "reasoning_effort": "high"}' --agent-llm-args '{"temperature": 1, "reasoning_effort": "high"}'
+uv run pytest tests -v
 ```
 
-Optionally, you can run specific example by using `--task-ids` instead of `--num-tasks`.
+## Notes
 
-**temperature:** When adk_agent is used defaults to 1. The commands in this document sets them explicitly using llm_args for both user and agent models.
+- **Temperature**: When `adk_agent` is used, temperature defaults to `1`.
+- **Reasoning level**: Only applies to Gemini 3 Pro. Defaults to `high` for `adk_agent`.
+- **`This model isn't mapped yet` warnings**: These come from litellm's cost calculation and can be suppressed by using `--user-llm vertex_ai/gemini-2.5-pro` instead of the Gemini 3 Pro preview.
 
-**reasoning_level** Only applies to Gemini 3 Pro model. It defaults to high for adk_agent while using this model. Otherwise, it will default to dynamic thinking. Again this document demonsrates setting it explicitly using llm_args.
+## Disclaimer
 
-**NOTE**: It is normal that you will be getting `This model isn't mapped yet` error logs. This is coming from litellm cost calculation workflow used by `--user-llm`. You can suppress is temporarily by swapping `--user-llm vertex_ai/gemini-3-pro-preview` with `--user-llm vertex_ai/gemini-2.5-pro`.
+This agent sample is provided for illustrative purposes only and is not intended for production use. It serves as a basic example of an agent and a foundational starting point for individuals or teams to develop their own agents.
 
-### Viewing trajectories
-
-You can use the following command to view trajectories after following the default options:
-
-```bash
-tau2 view
-```
-
-### Full run
-
-Full run requires dropping the arg `--task-ids`.
-
-```bash
-# Example: Run complete evaluation for all domains
-tau2 run \
-  --domain retail \
-  --agent adk_agent \
-  --agent-llm vertex_ai/gemini-3-pro-preview \
-  --user-llm vertex_ai/gemini-3-pro-preview \
-  --num-trials 4 \
-  --save-to gemini_3_pro_retail \
-  --user-llm-args '{"temperature": 1, "reasoning_effort": "high"}' \
-  --agent-llm-args '{"temperature": 1, "reasoning_effort": "high"}'
-
-
-tau2 run \
-  --domain airline \
-  --agent adk_agent \
-  --agent-llm vertex_ai/gemini-3-pro-preview \
-  --user-llm vertex_ai/gemini-3-pro-preview \
-  --num-trials 4 \
-  --save-to gemini_3_pro_airline \
-  --user-llm-args '{"temperature": 1, "reasoning_effort": "high"}' \
-  --agent-llm-args '{"temperature": 1, "reasoning_effort": "high"}'
-
-
-tau2 run \
-  --domain telecom \
-  --agent adk_agent \
-  --agent-llm vertex_ai/gemini-3-pro-preview \
-  --user-llm vertex_ai/gemini-3-pro-preview \
-  --num-trials 4 \
-  --save-to gemini_3_pro_telecom \
-  --user-llm-args '{"temperature": 1, "reasoning_effort": "high"}' \
-  --agent-llm-args '{"temperature": 1, "reasoning_effort": "high"}'
-```
-
-### Prepare Submission Package
-
-```bash
-tau2 submit prepare data/tau2/simulations/gemini_3_pro_*.json --output ./gemini_3_pro_submission
-```
-
-This command will:
-
-- Verify all trajectory files are valid
-- Check that submission requirements are met
-- Compute performance metrics (Pass^k rates)
-- Prompt for required metadata (model name, organization, contact email) -> you can pass dummy values here as we are not submitting yet.
-- Create a structured submission directory with:
-  - `submission.json`: Metadata and metrics
-  - `trajectories/`: Your trajectory files
-
-## 6. Testing the Agent
-
-To verify that the agent is set up correctly, you can run its unit tests using `pytest`.
-
-```bash
-pytest tests/test_adk_agent.py
-```
-
-To see coverage (optional):
-
-```bash
-pip install pytest-cov
-```
-
-```bash
-pytest --cov=tau2.agent.adk_agent --cov-report=html tests/test_adk_agent.py
-````
+Users are solely responsible for any further development, testing, security hardening, and deployment of agents based on this sample.
