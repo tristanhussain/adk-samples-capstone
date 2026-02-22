@@ -38,6 +38,12 @@ known-first-party = ["tau2_agent"]
 [tool.hatch.build.targets.wheel]
 packages = ["tau2_agent"]
 
+[tool.agent-starter-pack]
+example_question = "Can you run the tau2-bench evaluation on the airline domain?"
+
+[tool.agent-starter-pack.settings]
+agent_directory = "tau2_agent"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
