@@ -2,6 +2,19 @@
 
 A generative AI-powered agent designed to automate data governance on Google Cloud. It allows users to define, validate, and enforce data policies using natural language queries, translating them into executable code that runs against **Google Cloud Dataplex** and **BigQuery** metadata.
 
+## Using Agent Starter Pack (ASP)
+
+Use the **Agent Starter Pack** to scaffold a production-ready version of this agent with additional deployment and configuration options.
+
+Create and activate a virtual environment:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+# Windows:
+.venv\Scripts\activate
+```
+
 ## 🚀 Quick Start
 
 Follow these steps to get the agent up and running locally using the **Agent Development Kit (ADK)** web interface.
