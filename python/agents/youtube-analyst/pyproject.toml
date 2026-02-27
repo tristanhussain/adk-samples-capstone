@@ -8,7 +8,7 @@ authors = [
     { name = "Kun Wang", email = "kunwk@google.com" },
 ]
 readme = "README.md"
-requires-python = ">=3.10"
+license = "Apache-2.0"
 dependencies = [
     "google-adk>=0.1.0",
     "google-genai>=0.2.0",
@@ -20,10 +20,14 @@ dependencies = [
     "pydantic-settings",
 ]
 
+requires-python = ">=3.10,<3.13"
+
 [dependency-groups]
 dev = [
     "pytest",
+    "pytest-asyncio>=0.23.0",
     "ruff>=0.4.6",
+    "agent-starter-pack>=0.14.1",
 ]
 
 [tool.ruff]
@@ -32,6 +36,20 @@ extend = "../../../pyproject.toml"
 [tool.ruff.lint.isort]
 known-first-party = ["youtube_analyst"]
 
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["uv_build>=0.8.14,<0.9.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-root = ""
+
+# This configuration file is used by goo.gle/agent-starter-pack to power remote templating.
+# It defines the template's properties and settings.
+[tool.agent-starter-pack]
+example_question = "Find the top 5 videos about 'Generative AI' from the last month and plot their view counts."
+
+[tool.agent-starter-pack.settings]
+agent_directory = "youtube_analyst"
