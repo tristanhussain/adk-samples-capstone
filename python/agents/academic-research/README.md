@@ -30,6 +30,24 @@ This diagram shows the detailed architecture of the agents and tools used
 to implement this workflow.
 <img src="academic-research.svg" alt="academic researcher" width="800"/>
 
+## Using Agent Starter Pack (ASP)
+
+The recommended way to set up and run this agent is with the [Agent Starter Pack](https://goo.gle/agent-starter-pack), which provides a production-ready project with automated deployment and CI/CD.
+
+```bash
+# Install and scaffold the project using uv (recommended)
+uvx agent-starter-pack create my-academic-research -a adk@academic-research
+```
+
+Or with pip:
+
+```bash
+pip install --upgrade agent-starter-pack
+agent-starter-pack create my-academic-research -a adk@academic-research
+```
+
+The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
+
 ## Setup and Installation
 
 1.  **Prerequisites**
@@ -407,32 +425,6 @@ To delete the deployed agent, you may run the following command:
 ```bash
 uv run deployment/deploy.py --delete --resource_id=${AGENT_ENGINE_ID}
 ```
-
-### Alternative: Using Agent Starter Pack
-
-You can also use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:
-
-```bash
-# Create and activate a virtual environment
-python -m venv .venv && source .venv/bin/activate # On Windows: .venv\Scripts\activate
-
-# Install the starter pack and create your project
-pip install --upgrade agent-starter-pack
-agent-starter-pack create my-academic-research -a adk@academic-research
-```
-
-<details>
-<summary>⚡️ Alternative: Using uv</summary>
-
-If you have [`uv`](https://github.com/astral-sh/uv) installed, you can create and set up your project with a single command:
-```bash
-uvx agent-starter-pack create my-academic-research -a adk@academic-research
-```
-This command handles creating the project without needing to pre-install the package into a virtual environment.
-
-</details>
-
-The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
 
 ## Customization
 
