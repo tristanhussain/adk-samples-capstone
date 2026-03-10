@@ -548,12 +548,38 @@ the following:
 If so, what are the ID columns? (e.g., `country`, `store`, `product`)
 
 
+### Alternative: Using Agent Starter Pack
+
+You can also use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:
+
+```bash
+# Create and activate a virtual environment
+python -m venv .venv && source .venv/bin/activate # On Windows: .venv\Scripts\activate
+
+# Install the starter pack and create your project
+pip install --upgrade agent-starter-pack
+agent-starter-pack create my-data-science -a adk@data-science
+```
+
+<details>
+<summary>⚡️ Alternative: Using uv</summary>
+
+If you have [`uv`](https://github.com/astral-sh/uv) installed, you can create and set up your project with a single command:
+```bash
+uvx agent-starter-pack create my-data-science -a adk@data-science
+```
+This command handles creating the project without needing to pre-install the package into a virtual environment.
+
+</details>
+
+The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
+
 ## Testing and Evaluation
 
 To run the test and evaluation code, you need a few additional dependencies. Run
 the following uv command from the `agents/data-science` directory to install them:
 ```bash
-uv sync
+uv sync --dev
 ```
 
 ### Running Evaluations
