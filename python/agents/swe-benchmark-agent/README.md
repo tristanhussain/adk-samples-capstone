@@ -4,8 +4,6 @@
 
 This agent is designed to show the basic principles for tackling software engineering problems from two prominent benchmarks: SWE-bench and TerminalBench. It is not meant to be a production ready implementation.
 
-This sample is compatible with the Agent Starter Pack (ASP) and can be used as a base for creating production-ready agent deployments.
-
 ## Agent Details
 
 | Feature | Description |
@@ -26,76 +24,54 @@ The SWE Benchmark Agent uses a sophisticated orchestrator pattern:
 
 The agent operates autonomously within the Docker environment, using shell commands and file operations to solve software engineering tasks.
 
-## Setup and Installation
+## Using Agent Starter Pack (ASP)
 
-1.  **Prerequisites**
-
-    *   Python 3.10+
-    *   uv
-        *   For dependency management and packaging. Please follow the
-            instructions on the official
-            [uv website](https://docs.astral.sh/uv/) for installation.
-
-        ```bash
-        curl -LsSf https://astral.sh/uv/install.sh | sh
-        ```
-
-    * A project on Google Cloud Platform
-    * Google Cloud CLI
-        *   For installation, please follow the instruction on the official
-            [Google Cloud website](https://cloud.google.com/sdk/docs/install).
-
-2.  **Installation**
-
-    ```bash
-    # Clone this repository.
-    git clone https://github.com/google/adk-samples.git
-    cd adk-samples/python/agents/swe-benchmark-agent
-    # Install the package and dependencies.
-    uv sync
-    ```
-
-3.  **Configuration**
-
-    *   Set up Google Cloud credentials.
-
-        *   You may set the following environment variables in your shell, or in
-            a `.env` file instead.
-
-        ```bash
-        export GOOGLE_GENAI_USE_VERTEXAI=true
-        export GOOGLE_CLOUD_PROJECT=<your-project-id>
-        export GOOGLE_CLOUD_LOCATION=<your-project-location>
-        ```
-
-
-## Running Tests
-
-For running tests and evaluation, install the extra dependencies:
+The recommended way to set up and run this agent is with the [Agent Starter Pack](https://goo.gle/agent-starter-pack), which provides a production-ready project with automated deployment and CI/CD.
 
 ```bash
+# Install and scaffold the project using uv (recommended)
+uvx agent-starter-pack create my-swe-agent -a adk@swe-benchmark-agent
+```
+
+The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
+
+## Quick Start
+
+### 1. Prerequisites
+
+*   **Python 3.10+**
+*   **[uv](https://docs.astral.sh/uv/getting-started/installation/)** — fast Python package manager
+*   **Google Cloud SDK (`gcloud`)** installed and authenticated
+*   **Git**
+
+### 2. Installation
+
+```bash
+git clone https://github.com/google/adk-samples.git
+cd adk-samples/python/agents/swe-benchmark-agent
+
+# Install all dependencies (including dev tools)
 uv sync --dev
 ```
 
-Then the tests and evaluation can be run from the `swe-benchmark-agent` directory using
-the `pytest` module:
+### 3. Configuration
+
+Set up Google Cloud credentials (or use a `.env` file):
+
+```bash
+export GOOGLE_GENAI_USE_VERTEXAI=true
+export GOOGLE_CLOUD_PROJECT=<your-project-id>
+export GOOGLE_CLOUD_LOCATION=<your-project-location>
+gcloud auth application-default login
+```
+
+### 4. Run Tests
 
 ```bash
 uv run pytest tests
 ```
 
-## Alternative: Using Agent Starter Pack (ASP)
-
-You can also use the **Agent Starter Pack** to scaffold a production-ready version of this agent with additional deployment and configuration options.
-
-Create and activate a virtual environment:
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-# Windows:
-.venv\Scripts\activate
-```
+---
 
 ## Running Evaluations
 
@@ -148,3 +124,31 @@ The SWE Agent can be customized to better suit your requirements. For example:
  1. **Use a different model:** You can change the model used by the agent by modifying the `main.py` file.
  2. **Add more tools:** You can add more tools to the agent to give it more capabilities.
  3. **Support more benchmarks:** You can add support for more benchmarks by creating a new environment and updating the `main.py` file.
+
+<details>
+<summary><strong>Manual Setup (without ASP)</strong></summary>
+
+### Installation
+
+```bash
+git clone https://github.com/google/adk-samples.git
+cd adk-samples/python/agents/swe-benchmark-agent
+uv sync --dev
+```
+
+### Configuration
+
+```bash
+export GOOGLE_GENAI_USE_VERTEXAI=true
+export GOOGLE_CLOUD_PROJECT=<your-project-id>
+export GOOGLE_CLOUD_LOCATION=<your-project-location>
+gcloud auth application-default login
+```
+
+### Run Tests
+
+```bash
+uv run pytest tests
+```
+
+</details>
