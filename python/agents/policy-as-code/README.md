@@ -4,55 +4,35 @@ A generative AI-powered agent designed to automate data governance on Google Clo
 
 ## Using Agent Starter Pack (ASP)
 
-Use the **Agent Starter Pack** to scaffold a production-ready version of this agent with additional deployment and configuration options.
-
-Create and activate a virtual environment:
+The recommended way to set up and run this agent is with the [Agent Starter Pack](https://goo.gle/agent-starter-pack), which provides a production-ready project with automated deployment and CI/CD.
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-# Windows:
-.venv\Scripts\activate
+# Install and scaffold the project using uv (recommended)
+uvx agent-starter-pack create my-policy-as-code -a adk@policy-as-code
 ```
 
-## 🚀 Quick Start
+The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
 
-Follow these steps to get the agent up and running locally using the **Agent Development Kit (ADK)** web interface.
+## Quick Start
 
 ### 1. Prerequisites
 
 *   **Python 3.11+**
-*   **Google Cloud SDK (`gcloud`)** installed and authenticated.
+*   **[uv](https://docs.astral.sh/uv/getting-started/installation/)** — fast Python package manager
+*   **Google Cloud SDK (`gcloud`)** installed and authenticated
 *   **Git**
-*   **uv** (Recommended for dependency management) or standard `pip`.
 
 ### 2. Installation
 
-Clone the repository and navigate to the agent's directory:
-
 ```bash
-# Clone the repository
 git clone https://github.com/google/adk-samples.git
 cd adk-samples/python/agents/policy-as-code
-```
 
-Set up a virtual environment and install dependencies.
-
-Using `uv` (Recommended):
-```bash
-uv sync
-```
-
-Using `pip`:
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install .
+# Install all dependencies (including dev tools)
+uv sync --dev
 ```
 
 ### 3. Configuration
-
-The agent requires a few environment variables to function.
 
 1.  Copy the example configuration file:
     ```bash
@@ -65,43 +45,34 @@ The agent requires a few environment variables to function.
     *   `ENABLE_MEMORY_BANK`: Set to `True` to enable long-term memory (requires Firestore). Set to `False` to run without it. See [Memory Integration](./docs/MEMORY_INTEGRATION.md) for details.
     *   `FIRESTORE_DATABASE`: (Optional) Leave as `(default)` unless using a named database.
 
-3.  **Authentication**: Ensure you are authenticated with Google Cloud:
+3.  Authenticate with Google Cloud:
     ```bash
     gcloud auth application-default login
     ```
 
 ### 4. Run the Agent
 
-Start the agent using the ADK web interface.
-
-**Using `uv` (Recommended):**
 ```bash
 uv run adk web
 ```
 
-**Using `pip`:**
-```bash
-# Ensure your virtual environment is activated
-adk web
-```
+**Optional:** To enable short-term contextual memory (Agent Engine) for better conversation history:
 
-**Optional:** To enable short-term contextual memory (Agent Engine) for better conversation history, add the `--memory_service_uri` flag:
-
-**Using `uv`:**
 ```bash
 uv run adk web --memory_service_uri="agentengine://AGENT_ENGINE_ID"
 ```
 
-**Using `pip`:**
-```bash
-adk web --memory_service_uri="agentengine://AGENT_ENGINE_ID"
-```
+This will start a local web server. Open the URL in your browser to chat with the agent.
 
-This will start a local web server (usually at `http://localhost:3000` or `http://127.0.0.1:5000`). Open the URL in your browser to chat with the agent!
+### 5. Run Tests
+
+```bash
+uv run pytest
+```
 
 ---
 
-## 💡 Key Features
+## Key Features
 
 *   **Natural Language Policies**: "All tables in the finance dataset must have a description."
 *   **Hybrid Execution**: Generates Python code on-the-fly for flexibility, but executes it in a sandboxed environment for safety.
@@ -112,7 +83,7 @@ This will start a local web server (usually at `http://localhost:3000` or `http:
 *   **Compliance Scorecards**: Run a full health check on your data assets with a single command.
 *   **Remediation**: Can suggest specific fixes for identified violations.
 
-## 🏗️ Architecture
+## Architecture
 
 The agent is built using the **Google Cloud Agent Development Kit (ADK)** and leverages several Google Cloud services:
 
@@ -133,21 +104,40 @@ The agent is built using the **Google Cloud Agent Development Kit (ADK)** and le
 *   `tests/`: Unit and integration tests.
 *   `data/`: Sample metadata for local testing.
 
-## 🧪 Running Tests
+<details>
+<summary><strong>Manual Setup (without ASP)</strong></summary>
 
-To run the test suite and ensure everything is working correctly:
+### Installation
 
-**Using `uv` (Recommended):**
+```bash
+git clone https://github.com/google/adk-samples.git
+cd adk-samples/python/agents/policy-as-code
+uv sync --dev
+```
+
+### Configuration
+
+```bash
+cp .env.example .env
+# Edit .env with your GOOGLE_CLOUD_PROJECT, GOOGLE_CLOUD_LOCATION, etc.
+gcloud auth application-default login
+```
+
+### Run the Agent
+
+```bash
+uv run adk web
+```
+
+### Run Tests
+
 ```bash
 uv run pytest
 ```
 
-**Using `pip`:**
-```bash
-pytest
-```
+</details>
 
-## 📚 Documentation
+## Documentation
 
 For deep dives into the implementation, check the `docs/` folder:
 - [High-Level Architecture](./docs/HIGH_LEVEL_DETAILS.md)
