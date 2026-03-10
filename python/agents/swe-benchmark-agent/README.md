@@ -124,31 +124,3 @@ The SWE Agent can be customized to better suit your requirements. For example:
  1. **Use a different model:** You can change the model used by the agent by modifying the `main.py` file.
  2. **Add more tools:** You can add more tools to the agent to give it more capabilities.
  3. **Support more benchmarks:** You can add support for more benchmarks by creating a new environment and updating the `main.py` file.
-
-<details>
-<summary><strong>Manual Setup (without ASP)</strong></summary>
-
-### Installation
-
-```bash
-git clone https://github.com/google/adk-samples.git
-cd adk-samples/python/agents/swe-benchmark-agent
-uv sync --dev
-```
-
-### Configuration
-
-```bash
-export GOOGLE_GENAI_USE_VERTEXAI=true
-export GOOGLE_CLOUD_PROJECT=<your-project-id>
-export GOOGLE_CLOUD_LOCATION=<your-project-location>
-gcloud auth application-default login
-```
-
-### Run Tests
-
-```bash
-uv run pytest tests
-```
-
-</details>
