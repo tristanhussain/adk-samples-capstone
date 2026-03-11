@@ -38,9 +38,19 @@ relevant search results in order to ground the agent's responses with external
 up-to-date knowledge.
 *   **StackOverflow:** Query [StackOverflow’s](https://stackoverflow.com/) powerful Q\&A data, using [LangChain’s extensive tools library](https://python.langchain.com/docs/integrations/tools/)— specifically, the [StackExchange API Wrapper tool.](https://python.langchain.com/docs/integrations/tools/stackexchange/). ADK comes with support for [third-party tools like LangChain tools](https://google.github.io/adk-docs/tools/third-party-tools/#1-using-langchain-tools)
 
+## Using Agent Starter Pack (ASP)
+
+The recommended way to set up and run this agent is with the [Agent Starter Pack](https://goo.gle/agent-starter-pack), which provides a production-ready project with automated deployment and CI/CD.
+
+```bash
+uvx agent-starter-pack create my-software-bug-assistant -a adk@software-bug-assistant
+```
+
+The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
+
 ## Setup and Installation
 
-### Prerequisites 
+### Prerequisites
 
 - Python 3.9+
 - [uv](https://docs.astral.sh/uv/getting-started/installation) (to manage dependencies)
@@ -614,32 +624,6 @@ Test the agent by asking questions like:
 
 ![](deployment/images/cloud-run-example.png)
 
-
-## Alternative: Using Agent Starter Pack
-
-You can also use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:
-
-```bash
-# Create and activate a virtual environment
-python -m venv .venv && source .venv/bin/activate # On Windows: .venv\Scripts\activate
-
-# Install the starter pack and create your project
-pip install --upgrade agent-starter-pack
-agent-starter-pack create my-software-bug-assistant -a adk@software-bug-assistant
-```
-
-<details>
-<summary>⚡️ Alternative: Using uv</summary>
-
-If you have [`uv`](https://github.com/astral-sh/uv) installed, you can create and set up your project with a single command:
-```bash
-uvx agent-starter-pack create my-software-bug-assistant -a adk@software-bug-assistant
-```
-This command handles creating the project without needing to pre-install the package into a virtual environment.
-
-</details>
-
-The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
 
 ### Clean up
 
