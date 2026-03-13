@@ -63,6 +63,16 @@ Expand on the "Key Components" from above.
     * The session state is used to store information such as the itinerary, and temporary AgentTools' responses.
     * There are a number of premade itineraries that can be loaded for test runs. See 'Running the Agent' below on how to run them.
 
+## Using Agent Starter Pack (ASP)
+
+The recommended way to set up and run this agent is with the [Agent Starter Pack](https://goo.gle/agent-starter-pack), which provides a production-ready project with automated deployment and CI/CD.
+
+```bash
+uvx agent-starter-pack create my-travel-concierge -a adk@travel-concierge
+```
+
+The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
+
 ## Setup and Installation
 
 ### Folder Structure
@@ -151,13 +161,6 @@ Expand on the "Key Components" from above.
     gcloud auth application-default login
     ```
 
-5. Activate the virtual environment set up by Poetry, run:
-    ```bash
-    eval $(poetry env activate)
-    (travel-concierge-py3.12) $ # Virtualenv entered
-    ```
-    Repeat this command whenever you have a new shell, before running the commands in this README.
-
 ## Running the Agent
 
 ### Using `adk`
@@ -166,14 +169,12 @@ ADK provides convenient ways to bring up agents locally and interact with them.
 You may talk to the agent using the CLI:
 
 ```bash
-# Under the travel-concierge directory:
-adk run travel_concierge
+uv run adk run travel_concierge
 ```
 
 or via its web interface:
 ```bash
-# Under the travel-concierge directory:
-adk web
+uv run adk web
 ```
 
 This will start a local web server on your machine. You may open the URL, select "travel_concierge" in the top-left drop-down menu, and
@@ -267,32 +268,6 @@ To delete the agent, run the following command (using the resource ID returned p
 ```bash
 uv run python deployment/deploy.py --delete --resource_id=<RESOURCE_ID>
 ```
-
-### Alternative: Using Agent Starter Pack
-
-You can also use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:
-
-```bash
-# Create and activate a virtual environment
-python -m venv .venv && source .venv/bin/activate # On Windows: .venv\Scripts\activate
-
-# Install the starter pack and create your project
-pip install --upgrade agent-starter-pack
-agent-starter-pack create my-travel-concierge -a adk@travel-concierge
-```
-
-<details>
-<summary>⚡️ Alternative: Using uv</summary>
-
-If you have [`uv`](https://github.com/astral-sh/uv) installed, you can create and set up your project with a single command:
-```bash
-uvx agent-starter-pack create my-travel-concierge -a adk@travel-concierge
-```
-This command handles creating the project without needing to pre-install the package into a virtual environment.
-
-</details>
-
-The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
 
 ## Application Development
 
