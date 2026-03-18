@@ -106,6 +106,36 @@ The `deployment/` directory contains essential scripts for managing the agent's 
 * **`ge_register.sh`**: Registers the deployed agent with Gemini Enterprise.
 * **`ge_unregister.sh`**: Unregisters the agent from Gemini Enterprise.
 
+### Alternative: Using Agent Starter Pack (ASP)
+
+You can also use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options.
+
+```bash
+# Create and activate a virtual environment
+python -m venv .venv
+# Linux/macOS
+source .venv/bin/activate
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+
+# Install starter pack and create your project
+pip install --upgrade agent-starter-pack
+agent-starter-pack create my-brand-aligner -a adk@brand-aligner
+```
+
+<details>
+<summary>Alternative: Using uv</summary>
+
+If you already have [uv](https://docs.astral.sh/uv/) installed, you can create the project in one command:
+
+```bash
+uvx agent-starter-pack create my-brand-aligner -a adk@brand-aligner
+```
+
+</details>
+
+The starter pack guides you through setup options and generates a production-ready project structure.
+
 ## Configuration Reference
 
 The agent relies on the following key environment variables (defined in `.env`):
