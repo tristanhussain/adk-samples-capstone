@@ -124,9 +124,16 @@ This sample has not been rigorously tested, may contain bugs or limitations, and
 
 Users are solely responsible for any further development, testing, security hardening, and deployment of agents based on this sample. We recommend thorough review, testing, and the implementation of appropriate safeguards before using any derived agent in a live or critical system.
 
-### Alternative: Using Agent Starter Pack
+### Agent Starter Pack (Recommended)
 
-You can also use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:
+Use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options. The easiest way is with `uvx` (no install needed):
+
+```bash
+uvx agent-starter-pack create my-parallel-task-decomposition -a adk@parallel-task-decomposition-execution
+```
+
+<details>
+<summary>Alternative: Using pip and a virtual environment</summary>
 
 ```bash
 # Create and activate a virtual environment
@@ -135,15 +142,6 @@ python -m venv .venv && source .venv/bin/activate # On Windows: .venv\Scripts\ac
 pip install --upgrade agent-starter-pack
 agent-starter-pack create my-parallel-task-decomposition -a adk@parallel-task-decomposition-execution
 ```
-
-<details>
-<summary>⚡️ Alternative: Using uv</summary>
-
-If you have [`uv`](https://github.com/astral-sh/uv) installed, you can create and set up your project with a single command:
-```bash
-uvx agent-starter-pack create my-parallel-task-decomposition -a adk@parallel-task-decomposition-execution
-```
-This command handles creating the project without needing to pre-install the package into a virtual environment.
 
 </details>
 
