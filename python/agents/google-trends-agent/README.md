@@ -188,9 +188,16 @@ You can customize this agent to fit your specific needs:
 - **Enhance Analysis:** Add new tools to perform more in-depth analysis on the trends, deeper research (e.g. using Google Search as an additional tool) such as sentiment analysis or forecasting.
 - **Add Notifications:** Integrate tools that send alerts via email or Slack when a new trend matching specific criteria is detected.
 
-### Alternative: Using Agent Starter Pack
+### Agent Starter Pack (Recommended)
 
-You can also use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:
+Use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options. The easiest way is with `uvx` (no install needed):
+
+```bash
+uvx agent-starter-pack create my-google-trends-agent -a adk@google-trends
+```
+
+<details>
+<summary>Alternative: Using pip and a virtual environment</summary>
 
 ```bash
 # Create and activate a virtual environment
@@ -198,19 +205,8 @@ python -m venv .venv && source .venv/bin/activate # On Windows: .venv\Scripts\ac
 
 # Install the starter pack and create your project
 pip install --upgrade agent-starter-pack
-agent-starter-pack create my-google-trends-agent -a adk@google-trends-agent
+agent-starter-pack create my-google-trends-agent -a adk@google-trends
 ```
-
-<details>
-<summary>⚡️ Alternative: Using uv</summary>
-
-If you have [`uv`](https://github.com/astral-sh/uv) installed, you can create and set up your project with a single command:
-
-```bash
-uvx agent-starter-pack create my-google-trends-agent -a adk@google-trends-agent
-```
-
-This command handles creating the project without needing to pre-install the package into a virtual environment.
 
 </details>
 
