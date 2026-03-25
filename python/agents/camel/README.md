@@ -214,9 +214,16 @@ _CaMeL should not send this email_
 
 _Expected Output_: `Execution stopped due to security policy violation: Execution of tool 'send_email' denied: The body cannot be read by evil@fake-email-domain.com. It can only be read by frozenset({'trusted@fake-email-domain.com'})`
 
-### Alternative: Using Agent Starter Pack
+### Agent Starter Pack (Recommended)
 
-You can also use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:
+Use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options. The easiest way is with `uvx` (no install needed):
+
+```bash
+uvx agent-starter-pack create my-camel -a adk@camel
+```
+
+<details>
+<summary>Alternative: Using pip and a virtual environment</summary>
 
 ```bash
 # Create and activate a virtual environment
@@ -226,15 +233,6 @@ python -m venv .venv && source .venv/bin/activate # On Windows: .venv\Scripts\ac
 pip install --upgrade agent-starter-pack
 agent-starter-pack create my-camel -a adk@camel
 ```
-
-<details>
-<summary>⚡️ Alternative: Using uv</summary>
-
-If you have [`uv`](https://github.com/astral-sh/uv) installed, you can create and set up your project with a single command:
-```bash
-uvx agent-starter-pack create my-camel -a adk@camel
-```
-This command handles creating the project without needing to pre-install the package into a virtual environment.
 
 </details>
 
