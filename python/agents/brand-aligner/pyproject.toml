@@ -5,7 +5,7 @@ description = "Brand Aligner Agent"
 authors = [{ name = "Mohab Fekry", email = "mfekry@google.com" }]
 license = {text = "Apache License 2.0"}
 readme = "README.md"
-requires-python = ">=3.11,<3.13"
+requires-python = ">=3.12"
 dependencies = [
   "fastapi>=0.121.0",
   "google-adk==1.17.0",
@@ -38,17 +38,29 @@ deployment = [
     "absl-py>=2.2.1",
 ]
 
+  [tool.setuptools]
+  packages = ["brand_aligner_agent", "deployment", "tests"]
+
 [tool.ruff]
 extend = "../../../pyproject.toml"
 
 [tool.ruff.lint]
-ignore = ["C901"]
+ignore = ["C901", "PLR0912"]
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["brand-aligner"]
+known-first-party = ["brand_aligner_agent"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.format]
+indent-style = "space"
+quote-style = "double"
+skip-magic-trailing-comma = false
+docstring-code-format = true
 
 [tool.mypy]
 disallow_untyped_calls = true
@@ -68,19 +80,15 @@ disable_error_code = ["misc", "no-untyped-call", "no-any-return"]
 exclude = [".venv"]
 
 [tool.pytest.ini_options]
-pythonpath = [".", "my-brand-aligner"]
+pythonpath = "."
 asyncio_default_fixture_loop_scope = "function"
 
-[tool.hatch.build.targets.wheel]
-# Ensures Hatchling finds the package folder correctly
-packages = ["financial_advisor"]
-
 [tool.agent-starter-pack]
-example_question = "Analyze AAPL"
+example_question = "Evaluate this campaign for brand alignment"
 
 [tool.agent-starter-pack.settings]
-agent_directory = "financial_advisor"
+agent_directory = "brand_aligner_agent"
 
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+[[tool.uv.index]]
+url = "https://pypi.org/simple"
+default = true
