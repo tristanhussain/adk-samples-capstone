@@ -153,9 +153,16 @@ Contributions are welcome! Please feel free to submit pull requests or open issu
 
 This project is licensed under the Apache 2.0 License - see the [LICENSE file](LICENSE) for details.
 
-### Alternative: Using Agent Starter Pack
+### Agent Starter Pack (Recommended)
 
-You can also use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:
+Use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options. The easiest way is with `uvx` (no install needed):
+
+```bash
+uvx agent-starter-pack create my-currency-agent -a adk@currency-agent
+```
+
+<details>
+<summary>Alternative: Using pip and a virtual environment</summary>
 
 ```bash
 # Create and activate a virtual environment
@@ -165,17 +172,6 @@ python -m venv .venv && source .venv/bin/activate # On Windows: .venv\Scripts\ac
 pip install --upgrade agent-starter-pack
 agent-starter-pack create my-currency-agent -a adk@currency-agent
 ```
-
-<details>
-<summary>⚡️ Alternative: Using uv</summary>
-
-If you have [`uv`](https://github.com/astral-sh/uv) installed, you can create and set up your project with a single command:
-
-```bash
-uvx agent-starter-pack create my-currency-agent -a adk@currency-agent
-```
-
-This command handles creating the project without needing to pre-install the package into a virtual environment.
 
 </details>
 
