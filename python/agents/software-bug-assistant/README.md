@@ -9,7 +9,9 @@ The Software Bug Assistant is a sample agent designed to help IT Support and Sof
 
 ![](deployment/images/google-cloud-architecture.png)
 
-This README contains instructions for local and Google Cloud deployment. 
+This README contains instructions for local and Google Cloud deployment.
+
+The [Agent Starter Pack](https://goo.gle/agent-starter-pack) is the **recommended** way to scaffold a deployable copy of this agent; the flow below leads with **`uvx`** and keeps direct clone instructions in a collapsed section.
 
 ## Agent Details
 
@@ -38,35 +40,66 @@ relevant search results in order to ground the agent's responses with external
 up-to-date knowledge.
 *   **StackOverflow:** Query [StackOverflow’s](https://stackoverflow.com/) powerful Q\&A data, using [LangChain’s extensive tools library](https://python.langchain.com/docs/integrations/tools/)— specifically, the [StackExchange API Wrapper tool.](https://python.langchain.com/docs/integrations/tools/stackexchange/). ADK comes with support for [third-party tools like LangChain tools](https://google.github.io/adk-docs/tools/third-party-tools/#1-using-langchain-tools)
 
-## Using Agent Starter Pack (ASP)
-
-The recommended way to set up and run this agent is with the [Agent Starter Pack](https://goo.gle/agent-starter-pack), which provides a production-ready project with automated deployment and CI/CD.
-
-```bash
-uvx agent-starter-pack create my-software-bug-assistant -a adk@software-bug-assistant
-```
-
-The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
-
 ## Setup and Installation
+
+The [Agent Starter Pack](https://goo.gle/agent-starter-pack) (ASP) is the **recommended** path for new projects; the [adk-samples](https://github.com/google/adk-samples) tree is for browsing and contributions.
 
 ### Prerequisites
 
-- Python 3.9+
+- Python 3.10+
 - [uv](https://docs.astral.sh/uv/getting-started/installation) (to manage dependencies)
 - Git (for cloning the repository, see [Installation Instructions](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
 - Google Cloud CLI ([Installation Instructions](https://cloud.google.com/sdk/docs/install))
 
-### Installation
+### Recommended: Using Agent Starter Pack
 
-1. Clone the repository:
+Create and enter a new project (rename `my-software-bug-assistant` if you like):
+
+```bash
+uvx agent-starter-pack create my-software-bug-assistant -a adk@software-bug-assistant
+cd my-software-bug-assistant
+```
+
+Install dependencies:
+
+```bash
+uv sync --group dev
+```
+
+The starter pack prompts for deployment options and adds production-oriented CI/CD assets. Then continue with **Installation** step 1 from your project root (`.env`, MCP Toolbox, PostgreSQL, and running the agent).
+
+<details>
+<summary>Alternative: install Agent Starter Pack with pip</summary>
+
+```bash
+python -m venv .venv && source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install --upgrade agent-starter-pack
+agent-starter-pack create my-software-bug-assistant -a adk@software-bug-assistant
+cd my-software-bug-assistant
+```
+
+Then run `uv sync --group dev` and follow the same installation steps below.
+
+</details>
+
+<details>
+<summary>Clone this repository directly (contributors and advanced use)</summary>
+
+**New projects should still use the Agent Starter Pack** when possible.
 
 ```bash
 git clone https://github.com/google/adk-samples.git
 cd adk-samples/python/agents/software-bug-assistant
+uv sync --group dev
 ```
 
-2. Configure environment variables (via `.env` file):
+Run the remaining commands from the `software-bug-assistant/` directory.
+
+</details>
+
+### Installation
+
+1. Configure environment variables (via `.env` file):
 
 #### GitHub Personal Access Token (PAT)
 
@@ -143,7 +176,7 @@ Source the `.env` file into your environment:
 set -o allexport && source .env && set +o allexport
 ```
 
-3. Download [MCP Toolbox for Databases](https://github.com/googleapis/genai-toolbox)
+2. Download [MCP Toolbox for Databases](https://github.com/googleapis/genai-toolbox)
 
 ```bash
 export OS="linux/amd64" # one of linux/amd64, darwin/arm64, darwin/amd64, or windows/amd64
