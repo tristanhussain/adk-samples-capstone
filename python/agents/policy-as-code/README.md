@@ -2,39 +2,32 @@
 
 A generative AI-powered agent designed to automate data governance on Google Cloud. It allows users to define, validate, and enforce data policies using natural language queries, translating them into executable code that runs against **Google Cloud Dataplex** and **BigQuery** metadata.
 
-## Using Agent Starter Pack (ASP)
+The [Agent Starter Pack](https://goo.gle/agent-starter-pack) (ASP) is the **recommended** way to create a new project from this sample: you get deployment options and CI/CD scaffolding. The copy in [adk-samples](https://github.com/google/adk-samples) is the upstream source for browsing and contributions.
 
-The recommended way to set up and run this agent is with the [Agent Starter Pack](https://goo.gle/agent-starter-pack), which provides a production-ready project with automated deployment and CI/CD.
-
-```bash
-# Install and scaffold the project using uv (recommended)
-uvx agent-starter-pack create my-policy-as-code -a adk@policy-as-code
-```
-
-The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
-
-## Quick Start
-
-### 1. Prerequisites
+## Prerequisites
 
 *   **Python 3.11+**
 *   **[uv](https://docs.astral.sh/uv/getting-started/installation/)** — fast Python package manager
 *   **Google Cloud SDK (`gcloud`)** installed and authenticated
 *   **Git**
 
-### 2. Installation
+### Recommended: Using Agent Starter Pack
+
+The Agent Starter Pack is the recommended way to create and deploy a production-ready version of this agent. Start from a new directory (replace `my-policy-as-code` with your project name):
 
 ```bash
-git clone https://github.com/google/adk-samples.git
-cd adk-samples/python/agents/policy-as-code
-
-# Install all dependencies (including dev tools)
-uv sync --dev
+uvx agent-starter-pack create my-policy-as-code -a adk@policy-as-code
+cd my-policy-as-code
 ```
 
-### 3. Configuration
+Install dependencies (including dev tools for tests):
+
+```bash
+uv sync --group dev
+```
 
 1.  Copy the example configuration file:
+
     ```bash
     cp .env.example .env
     ```
@@ -46,11 +39,54 @@ uv sync --dev
     *   `FIRESTORE_DATABASE`: (Optional) Leave as `(default)` unless using a named database.
 
 3.  Authenticate with Google Cloud:
+
     ```bash
     gcloud auth application-default login
     ```
 
-### 4. Run the Agent
+During setup, the starter pack will prompt you for deployment options and adds production-oriented tooling (for example automated CI/CD deployment scripts).
+
+<details>
+<summary>Alternative: install Agent Starter Pack with pip</summary>
+
+```bash
+python -m venv .venv && source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install --upgrade agent-starter-pack
+agent-starter-pack create my-policy-as-code -a adk@policy-as-code
+cd my-policy-as-code
+```
+
+Then continue with `uv sync --group dev` and the configuration steps above.
+
+</details>
+
+<details>
+<summary>Clone this repository directly (contributors and advanced use)</summary>
+
+Use this workflow when working against the upstream repository (for example to open a pull request). **New projects should still use the Agent Starter Pack** as described above.
+
+```bash
+git clone https://github.com/google/adk-samples.git
+cd adk-samples/python/agents/policy-as-code
+uv sync --group dev
+cp .env.example .env
+# Edit .env with your GOOGLE_CLOUD_PROJECT, GOOGLE_CLOUD_LOCATION, etc.
+gcloud auth application-default login
+```
+
+Run the agent and tests with the same commands as in the recommended path (`uv run adk run`, `uv run adk web`, `uv run pytest`).
+
+</details>
+
+## Running the Agent
+
+From your project directory (ASP-scaffolded or cloned repo):
+
+```bash
+uv run adk run policy_as_code_agent
+```
+
+Or use the web UI:
 
 ```bash
 uv run adk web
@@ -62,13 +98,21 @@ uv run adk web
 uv run adk web --memory_service_uri="agentengine://AGENT_ENGINE_ID"
 ```
 
-This will start a local web server. Open the URL in your browser to chat with the agent.
+Open the printed URL in your browser to chat with the agent.
 
-### 5. Run Tests
+## Running Tests
 
 ```bash
 uv run pytest
 ```
+
+Run only fast unit tests:
+
+```bash
+uv run pytest tests/unit -v
+```
+
+Integration tests are marked and may require GCP credentials and a configured `.env`.
 
 ---
 
@@ -96,6 +140,7 @@ The agent is built using the **Google Cloud Agent Development Kit (ADK)** and le
 ### Project Structure
 
 *   `policy_as_code_agent/`
+    *   `__init__.py`: Application Default Credentials and Vertex environment defaults for ASP/local runs.
     *   `agent.py`: Entry point and core agent definition.
     *   `memory.py`: Handles Firestore interactions (saving/retrieving policies).
     *   `utils/`: Utility modules for LLM logic, Dataplex, GCS, and common tools.
@@ -103,39 +148,6 @@ The agent is built using the **Google Cloud Agent Development Kit (ADK)** and le
     *   `prompts/`: Markdown templates for LLM instructions.
 *   `tests/`: Unit and integration tests.
 *   `data/`: Sample metadata for local testing.
-
-<details>
-<summary><strong>Manual Setup (without ASP)</strong></summary>
-
-### Installation
-
-```bash
-git clone https://github.com/google/adk-samples.git
-cd adk-samples/python/agents/policy-as-code
-uv sync --dev
-```
-
-### Configuration
-
-```bash
-cp .env.example .env
-# Edit .env with your GOOGLE_CLOUD_PROJECT, GOOGLE_CLOUD_LOCATION, etc.
-gcloud auth application-default login
-```
-
-### Run the Agent
-
-```bash
-uv run adk web
-```
-
-### Run Tests
-
-```bash
-uv run pytest
-```
-
-</details>
 
 ## Documentation
 
