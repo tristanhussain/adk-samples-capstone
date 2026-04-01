@@ -44,31 +44,52 @@ This diagram shows the detailed architecture of the agents and tools used
 to implement this workflow.
 <img src="financial-advisor.png" alt="Financial Advisor" width="800"/>
 
-## Setup and Installation
+## Run this agent
+
+> [!IMPORTANT]
+> This agent uses the Agent Starter Pack, which is the fastest and easiest way to run and customize this agent.
+
+From the `python` directory, run the following command:
+
+```shell
+uvx agent start financial-advisor
+```
+
+This will start the agent and make it available to call from the command line.
+
+In a separate terminal, you can chat with this agent by running:
+
+```shell
+uvx agent chat financial-advisor -- -q "Analyze AAPL"
+```
+
+<details>
+<summary>Alternative: Set up and run manually</summary>
+
+### Setup
 
 1.  **Prerequisites**
 
     *   Python 3.10+
-    *   uv
-        *   For dependency management and packaging. Please follow the
-            instructions on the official
-            [uv website](https://docs.astral.sh/uv/) for installation.
+    *   `uv` - for dependency management and packaging. Please follow the
+        instructions on the official
+        [uv website](https://docs.astral.sh/uv/) for installation.
 
         ```bash
         curl -LsSf https://astral.sh/uv/install.sh | sh
         ```
 
     * A project on Google Cloud Platform
-    * Google Cloud CLI
-        *   For installation, please follow the instruction on the official
-            [Google Cloud website](https://cloud.google.com/sdk/docs/install).
+    * Google Cloud CLI - for installation, please follow the instruction on the
+      official
+      [Google Cloud website](https://cloud.google.com/sdk/docs/install).
 
 2.  **Installation**
 
+    From this agent's directory (`python/agents/financial-advisor`), run the
+    following command:
+
     ```bash
-    # Clone this repository.
-    git clone https://github.com/google/adk-samples.git
-    cd adk-samples/python/agents/financial-advisor
     # Install the package and dependencies.
     uv sync
     ```
@@ -94,7 +115,7 @@ to implement this workflow.
         gcloud auth application-default set-quota-project $GOOGLE_CLOUD_PROJECT
         ```
 
-## Running the Agent
+### Running the Agent
 
 **Using `adk`**
 
