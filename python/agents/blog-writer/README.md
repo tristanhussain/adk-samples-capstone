@@ -2,29 +2,55 @@
 
 This project contains the core logic for the Blogger Agent, a multi-agent system designed to assist users in creating technical blog posts. The agent is built using the Google Agent Development Kit (ADK) and follows a modular architecture.
 
-## Getting Started with uv
+## Getting Started
 
-This project uses [uv](https://github.com/astral-sh/uv) for dependency management.
-
-### Installation
-
-First, you need to install uv. You can do this using `pip`:
+The fastest way to get started is to use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent:
 
 ```bash
-pip install uv
+uvx agent-starter-pack create my-blogger-agent -a adk@blogger-agent
 ```
 
-### Project Setup
+This command will create a new project, set up a virtual environment, install all necessary dependencies, and guide you through configuring deployment options.
 
-Once uv is installed, you can install the project's dependencies:
+<details>
+<summary>🛠️ Manual Setup</summary>
+
+### Prerequisites
+
+*   Python 3.11 or higher
+*   `uv` installed (`pip install uv`)
+
+### 1. Clone the Repository
 
 ```bash
-uv pip install -r requirements.txt
+git clone https://github.com/google/adk-samples.git
+cd adk-samples/python/agents/blog-writer
 ```
 
-This will create a virtual environment for the project and install all the required libraries.
+### 2. Create a Virtual Environment & Install Dependencies
 
-### Running the Agent and Tests
+This project uses `uv` to manage dependencies. To create a virtual environment and install the required libraries, run the following command:
+
+```bash
+uv sync
+```
+
+### 3. Configure Environment Variables
+
+Create a `.env` file in the project root and add your Google Cloud project details:
+
+```
+GOOGLE_CLOUD_PROJECT="your-gcp-project-id"
+GOOGLE_CLOUD_LOCATION="your-gcp-region"
+```
+
+If you are using Vertex AI, make sure you are authenticated with `gcloud`:
+
+```bash
+gcloud auth application-default login
+```
+
+### 4. Running the Agent and Tests
 
 To run any scripts or tests within the project's virtual environment, use `uv run`:
 
@@ -51,34 +77,7 @@ uv run python -m tests.test_agent
 ```bash
 uv run pytest eval/test_eval.py
 ```
-
-## Alternative: Using Agent Starter Pack
-
-You can also use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:
-
-```bash
-# Create and activate a virtual environment
-python -m venv .venv && source .venv/bin/activate
-# On Windows: .venv\\Scripts\\activate
-
-# Install the starter pack and create your project
-pip install --upgrade agent-starter-pack
-agent-starter-pack create my-blogger-agent -a adk@blogger-agent
-```
-
-<details>
-<summary>⚡️ Alternative: Using uv</summary>
-
-If you have [`uv`](https://github.com/astral-sh/uv) installed, you can create and set up your project with a single command:
-
-```bash
-uvx agent-starter-pack create my-blogger-agent -a adk@blogger-agent
-```
-
-This command handles creating the project without needing to pre-install the package into a virtual environment.
 </details>
-
-The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
 
 ## Project Structure
 
