@@ -1,6 +1,5 @@
 # Marketing Agency
 
-
 ## Overview
 
 This AI-powered assistant is engineered to enhance the capabilities of creative agencies when launching new websites or products. The process commences with an intelligent agent that guides users in selecting an optimal DNS domain, ensuring it aligns perfectly with the website's subject matter or the product's identity. Following this foundational step, another specialized agent takes over to facilitate the comprehensive creation of the entire website. Subsequently, a dedicated agent is deployed to generate a full suite of marketing materials. The workflow culminates with an agent focused on designing distinctive logos that are thematically consistent with the project's core topic. This multi-agent system aims to streamline and augment the creative output of the agency across the entire launch lifecycle.
@@ -24,63 +23,82 @@ This diagram shows the detailed architecture of the agents and tools used
 to implement this workflow.
 <img src="marketing-agency.png" alt="marketing agency" width="800"/>
 
-## Setup and Installation
+## Quick Start with Agent Starter Pack (Recommended)
 
-1.  **Prerequisites**
+The fastest way to get a production-ready version of this agent is using the
+[Agent Starter Pack](https://goo.gle/agent-starter-pack). It scaffolds a full
+project with CI/CD, deployment scripts, and best practices built in.
 
-    *   Python 3.10+
-    *   [uv](https://docs.astral.sh/uv/) for dependency management and packaging.
+```bash
+uvx agent-starter-pack create my-marketing-agency -a adk@marketing-agency
+```
 
-        ```bash
-        curl -LsSf https://astral.sh/uv/install.sh | sh
-        ```
+This single command will:
+- Copy the marketing-agency sample into a new project
+- Prompt you to select deployment options (Cloud Run, Agent Engine, etc.)
+- Generate CI/CD pipelines and infrastructure-as-code
+- Set up a ready-to-deploy project structure
 
-    * A project on Google Cloud Platform
-    * [Google Cloud CLI](https://cloud.google.com/sdk/docs/install)
+Once created, follow the generated project's README for deployment instructions.
 
-2.  **Installation**
+## Setup and Installation (Local Development)
+
+If you prefer to run the agent directly from this repository without the
+starter pack scaffolding, follow the steps below.
+
+### Prerequisites
+
+*   Python 3.10+
+*   [uv](https://docs.astral.sh/uv/) for dependency management and packaging.
 
     ```bash
-    # Clone this repository.
-    git clone https://github.com/google/adk-samples.git
-    cd adk-samples/python/agents/marketing-agency
-    # Install the package and dependencies.
-    uv sync
+    curl -LsSf https://astral.sh/uv/install.sh | sh
     ```
 
-3.  **Configuration**
+* A project on Google Cloud Platform
+* [Google Cloud CLI](https://cloud.google.com/sdk/docs/install)
 
-    *   Copy `.env.example` to `.env` and fill in your project details:
+### Installation
 
-        ```bash
-        cp .env.example .env
-        ```
+```bash
+# Clone this repository.
+git clone https://github.com/google/adk-samples.git
+cd adk-samples/python/agents/marketing-agency
+# Install the package and dependencies.
+uv sync
+```
 
-    *   Required environment variables (set in `.env` or your shell):
+### Configuration
 
-        ```bash
-        GOOGLE_GENAI_USE_VERTEXAI=1
-        GOOGLE_CLOUD_PROJECT=<your-project-id>
-        GOOGLE_CLOUD_LOCATION=<your-project-location>
-        GOOGLE_CLOUD_STORAGE_BUCKET=<your-storage-bucket>  # Only required for deployment on Agent Engine
-        ```
+1.  Copy `.env.example` to `.env` and fill in your project details:
 
-    *   Authenticate with Google Cloud:
+    ```bash
+    cp .env.example .env
+    ```
 
-        ```bash
-        gcloud auth application-default login
-        gcloud auth application-default set-quota-project $GOOGLE_CLOUD_PROJECT
-        ```
+2.  Required environment variables (set in `.env` or your shell):
 
-    The agent's `__init__.py` automatically loads `.env` via `python-dotenv`
-    and attempts to discover your GCP project via Application Default
-    Credentials (ADC). If ADC is configured, you only need to set
-    `GOOGLE_CLOUD_PROJECT` when your default project differs from what
-    `gcloud` returns.
+    ```bash
+    GOOGLE_GENAI_USE_VERTEXAI=1
+    GOOGLE_CLOUD_PROJECT=<your-project-id>
+    GOOGLE_CLOUD_LOCATION=<your-project-location>
+    GOOGLE_CLOUD_STORAGE_BUCKET=<your-storage-bucket>  # Only required for deployment on Agent Engine
+    ```
+
+3.  Authenticate with Google Cloud:
+
+    ```bash
+    gcloud auth application-default login
+    gcloud auth application-default set-quota-project $GOOGLE_CLOUD_PROJECT
+    ```
+
+The agent's `__init__.py` automatically loads `.env` via `python-dotenv`
+and attempts to discover your GCP project via Application Default
+Credentials (ADC). If ADC is configured, you only need to set
+`GOOGLE_CLOUD_PROJECT` when your default project differs from what
+`gcloud` returns.
 
 ## Running the Agent
-
-**Using `adk`**
 
 ADK provides convenient ways to bring up agents locally and interact with them.
 You may talk to the agent using the CLI:
@@ -98,7 +116,7 @@ uv run adk web
 The command `adk web` will start a web server on your machine and print the URL.
 You may open the URL, select "marketing_agency" in the top-left drop-down menu, and
 a chatbot interface will appear on the right. The conversation is initially
-blank. Here are some example requests you may ask the Marketing Agency to verify:
+blank. Here are some example requests you may ask the Marketing Agency:
 
 ```
 who are you
@@ -108,7 +126,11 @@ Sampled responses of these requests are shown below in the [Example
 Interaction](#example-interaction) section.
 
 ```
-I am a marketing expert, and my goal is to help you establish a powerful online presence and connect effectively with your audience. I will guide you through defining your digital identity, from choosing the perfect domain name and crafting a professional website, to strategizing online marketing campaigns, designing a memorable logo, and creating engaging short videos.
+I am a marketing expert, and my goal is to help you establish a powerful online
+presence and connect effectively with your audience. I will guide you through
+defining your digital identity, from choosing the perfect domain name and
+crafting a professional website, to strategizing online marketing campaigns,
+designing a memorable logo, and creating engaging short videos.
 
 What keywords are relevant to your brand? I'll use them to suggest some domain names.
 ```
@@ -121,15 +143,22 @@ of the agent may be different every time.
 ```
 user: who are you
 
-I am a marketing expert, and my goal is to help you establish a powerful online presence and connect effectively with your audience. I will guide you through defining your digital identity, from choosing the perfect domain name and crafting a professional website, to strategizing online marketing campaigns, designing a memorable logo, and creating engaging short videos.
+I am a marketing expert, and my goal is to help you establish a powerful online
+presence and connect effectively with your audience. I will guide you through
+defining your digital identity, from choosing the perfect domain name and
+crafting a professional website, to strategizing online marketing campaigns,
+designing a memorable logo, and creating engaging short videos.
 
 help me to find the perfect domain
 
-Okay, I can help with that! To start, please tell me some keywords relevant to your brand. For example, if you're selling handmade jewelry, keywords might be "handmade," "jewelry," "artisan," "unique," "gifts."
+Okay, I can help with that! To start, please tell me some keywords relevant to
+your brand. For example, if you're selling handmade jewelry, keywords might be
+"handmade," "jewelry," "artisan," "unique," "gifts."
 
 user: i want to sell cakes organic cakes
 
-Great! I'll use "organic" and "cakes" as keywords to find some domain name options for you.
+Great! I'll use "organic" and "cakes" as keywords to find some domain name
+options for you.
 
 Here are some available domain names based on your keywords:
 
@@ -168,8 +197,25 @@ that the agent's responses match a pre-defined response reasonably well.
 
 ## Deployment
 
-The Marketing Agency can be deployed to Vertex AI Agent Engine using the following
-commands:
+### Using Agent Starter Pack (Recommended)
+
+The recommended way to deploy this agent is via the
+[Agent Starter Pack](https://goo.gle/agent-starter-pack), which provides
+production-ready deployment pipelines out of the box:
+
+```bash
+uvx agent-starter-pack create my-marketing-agency -a adk@marketing-agency
+cd my-marketing-agency
+```
+
+The starter pack supports multiple deployment targets including Cloud Run and
+Vertex AI Agent Engine, and generates Terraform/CI/CD configuration
+automatically. Follow the generated project's README for full deployment
+instructions.
+
+### Manual Deployment to Vertex AI Agent Engine
+
+You can also deploy directly to Vertex AI Agent Engine without the starter pack:
 
 ```bash
 uv sync --group deployment
@@ -200,16 +246,6 @@ To delete the deployed agent:
 ```bash
 uv run deployment/deploy.py --delete --resource_id=${AGENT_ENGINE_ID}
 ```
-
-### Using Agent Starter Pack
-
-You can also use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:
-
-```bash
-uvx agent-starter-pack create my-marketing-agency -a adk@marketing-agency
-```
-
-The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
 
 ## Customization
 
