@@ -51,59 +51,80 @@ If the API identifies any content violations based on the configured Model Armor
 | **Components** | Plugins (LLM Judge, Model Armor), Tools |
 | **Vertical** | Safety / Security |
 
-## Setup and Installation
+## Quick Start with Agent Starter Pack (Recommended)
 
-1.  **Prerequisites**
+The fastest way to get a production-ready version of this agent is using the
+[Agent Starter Pack](https://goo.gle/agent-starter-pack). It scaffolds a full
+project with CI/CD, deployment scripts, and best practices built in.
 
-    *   Python 3.12+
-    *   [uv](https://docs.astral.sh/uv/) for dependency management and packaging.
+```bash
+uvx agent-starter-pack create my-safety-plugins -a adk@safety-plugins
+```
 
-        ```bash
-        curl -LsSf https://astral.sh/uv/install.sh | sh
-        ```
+This single command will:
+- Copy the safety-plugins sample into a new project
+- Prompt you to select deployment options (Cloud Run, Agent Engine, etc.)
+- Generate CI/CD pipelines and infrastructure-as-code
+- Set up a ready-to-deploy project structure
 
-    * A project on Google Cloud Platform
-    * [Google Cloud CLI](https://cloud.google.com/sdk/docs/install)
+Once created, follow the generated project's README for deployment instructions.
 
-2.  **Installation**
+## Setup and Installation (Local Development)
+
+If you prefer to run the agent directly from this repository without the
+starter pack scaffolding, follow the steps below.
+
+### Prerequisites
+
+*   Python 3.12+
+*   [uv](https://docs.astral.sh/uv/) for dependency management and packaging.
 
     ```bash
-    # Clone this repository.
-    git clone https://github.com/google/adk-samples.git
-    cd adk-samples/python/agents/safety-plugins
-    # Install the package and dependencies.
-    uv sync
+    curl -LsSf https://astral.sh/uv/install.sh | sh
     ```
 
-3.  **Configuration**
+* A project on Google Cloud Platform
+* [Google Cloud CLI](https://cloud.google.com/sdk/docs/install)
 
-    *   Copy `.env.example` to `.env` and fill in your project details:
+### Installation
 
-        ```bash
-        cp .env.example .env
-        ```
+```bash
+# Clone this repository.
+git clone https://github.com/google/adk-samples.git
+cd adk-samples/python/agents/safety-plugins
+# Install the package and dependencies.
+uv sync
+```
 
-    *   Required environment variables (set in `.env` or your shell):
+### Configuration
 
-        ```bash
-        GOOGLE_GENAI_USE_VERTEXAI=1
-        GOOGLE_CLOUD_PROJECT=<your-project-id>
-        GOOGLE_CLOUD_LOCATION=us-central1
-        MODEL_ARMOR_TEMPLATE_ID=<your-template-id>  # Only required for the Model Armor plugin
-        ```
+1.  Copy `.env.example` to `.env` and fill in your project details:
 
-    *   Authenticate with Google Cloud:
+    ```bash
+    cp .env.example .env
+    ```
 
-        ```bash
-        gcloud auth application-default login
-        gcloud auth application-default set-quota-project $GOOGLE_CLOUD_PROJECT
-        ```
+2.  Required environment variables (set in `.env` or your shell):
 
-    The agent's `__init__.py` automatically loads `.env` via `python-dotenv`
-    and attempts to discover your GCP project via Application Default
-    Credentials (ADC). If ADC is configured, you only need to set
-    `GOOGLE_CLOUD_PROJECT` when your default project differs from what
-    `gcloud` returns.
+    ```bash
+    GOOGLE_GENAI_USE_VERTEXAI=1
+    GOOGLE_CLOUD_PROJECT=<your-project-id>
+    GOOGLE_CLOUD_LOCATION=us-central1
+    MODEL_ARMOR_TEMPLATE_ID=<your-template-id>  # Only required for the Model Armor plugin
+    ```
+
+3.  Authenticate with Google Cloud:
+
+    ```bash
+    gcloud auth application-default login
+    gcloud auth application-default set-quota-project $GOOGLE_CLOUD_PROJECT
+    ```
+
+The agent's `__init__.py` automatically loads `.env` via `python-dotenv`
+and attempts to discover your GCP project via Application Default
+Credentials (ADC). If ADC is configured, you only need to set
+`GOOGLE_CLOUD_PROJECT` when your default project differs from what
+`gcloud` returns.
 
 ## Running the Agent
 
@@ -157,16 +178,6 @@ Then run the tests from the `safety-plugins` directory:
 ```bash
 uv run pytest tests
 ```
-
-## Using Agent Starter Pack
-
-You can also use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:
-
-```bash
-uvx agent-starter-pack create my-safety-plugins -a adk@safety-plugins
-```
-
-The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
 
 ## Customization
 
