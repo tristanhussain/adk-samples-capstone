@@ -50,22 +50,27 @@ Given a location and business type, this pipeline automatically:
 - Generates strategic recommendations with extended reasoning
 - Produces an HTML executive report and visual infographic
 
----
+## Run this agent
 
-## Getting Started: From Zero to Running Agent in 5 Minutes
+> [!IMPORTANT]
+> This agent uses the Agent Starter Pack, which is the fastest and easiest way to run and customize this agent.
 
-**Prerequisites:**
-- **[Python 3.10-3.12](https://www.python.org/downloads/)**
-- **[uv](https://github.com/astral-sh/uv)** (recommended) or pip
-- **[Google Maps API key](https://console.cloud.google.com/apis/credentials)** (with Places API enabled)
-- **[Node.js 18+](https://nodejs.org/)** *(only required for AG-UI frontend)*
+From the `python` directory, run the following command:
 
-You have two options to get started. Choose the one that best fits your setup:
+```shell
+uvx agent start retail-ai-location-strategy
+```
 
-*   A. **[Google AI Studio (Recommended)](#a-google-ai-studio-recommended)**: The quickest way to get started using a **Google AI Studio API key**. This method involves cloning the sample repository.
-*   B. **[Google Cloud Vertex AI](#b-google-cloud-vertex-ai)**: Choose this path if you want to use an existing **Google Cloud project** for authentication and deployment. This method generates a new, prod-ready project using the [agent-starter-pack](https://goo.gle/agent-starter-pack) including all the deployment scripts required.
+This will start the agent and make it available to call from the command line.
 
----
+In a separate terminal, you can chat with this agent by running:
+
+```shell
+uvx agent chat retail-ai-location-strategy -- -q "I want to open a coffee shop in Indiranagar, Bangalore"
+```
+
+<details>
+<summary>Alternative: Set up and run manually</summary>
 
 ### A. Google AI Studio (Recommended)
 

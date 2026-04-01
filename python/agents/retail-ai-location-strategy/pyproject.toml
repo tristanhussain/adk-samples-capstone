@@ -21,7 +21,7 @@ dependencies = [
 [project.urls]
 Repository = "https://github.com/google/adk-samples"
 
-[dependency-groups]
+[project.optional-dependencies]
 dev = [
     "pytest>=8.0.0",
     "pytest-asyncio>=0.24.0",
