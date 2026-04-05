@@ -294,7 +294,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "agent-starter-pack", specifier = ">=0.14.1" },
+    { name = "agent-starter-pack", specifier = ">=0.32.0" },
     { name = "google-adk", extras = ["eval"], specifier = ">=1.0.0" },
     { name = "nest-asyncio", specifier = ">=1.6.0" },
     { name = "pytest", specifier = ">=8.0.0" },
