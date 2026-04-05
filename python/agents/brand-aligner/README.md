@@ -89,26 +89,31 @@ agent-starter-pack create my-brand-aligner -a adk@brand-aligner
 
 The starter pack guides you through setup options and generates a production-ready project structure.
 
+<details>
+<summary>Alternative: Local development from this sample repo (manual clone)</summary>
+
 ### 3. Local Testing (ADK Web Interface)
 
-To test the agent locally using the ADK's built-in web interface:
+1. Clone and move into the sample:
 
-1. **Install Dependencies:**
-   This project uses `uv` for dependency management.
+   ```bash
+   git clone https://github.com/google/adk-samples.git
+   cd adk-samples/python/agents/brand-aligner
+   ```
+
+2. Install dependencies:
 
    ```bash
    uv sync
    ```
 
-2. **Run Tests:**
-   Execute the unit test suite to verify the agent's logic.
+3. Run tests:
 
    ```bash
    uv run pytest -v
    ```
 
-3. **Run the Agent:**
-   This starts the local ADK web UI.
+4. Run the ADK web UI:
 
    ```bash
    uv run adk web --log_level DEBUG
@@ -133,6 +138,8 @@ The `deployment/` directory contains essential scripts for managing the agent's 
 * **`config.sh`**: **CRITICAL**. This file contains all the variables required for Gemini Enterprise registration and deployment (for example, Agent Engine ID and service account details). It relies on your local `.env` file for values. Ensure this is configured correctly before running the registration script.
 * **`ge_register.sh`**: Registers the deployed agent with Gemini Enterprise.
 * **`ge_unregister.sh`**: Unregisters the agent from Gemini Enterprise.
+
+</details>
 
 ## Configuration Reference
 
