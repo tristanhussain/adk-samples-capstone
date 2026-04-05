@@ -149,7 +149,9 @@ Then run `make install && make dev` to start the agent.
 </details>
 
 #### Step 1: Create Project from Template
-This command uses the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a new directory (`my-retail-agent`) with all the necessary code.
+
+You can use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:
+
 ```bash
 # Create and activate a virtual environment
 python -m venv .venv && source .venv/bin/activate # On Windows: .venv\Scripts\activate
@@ -158,17 +160,21 @@ python -m venv .venv && source .venv/bin/activate # On Windows: .venv\Scripts\ac
 pip install --upgrade agent-starter-pack
 agent-starter-pack create my-retail-agent -a adk@retail-ai-location-strategy
 ```
+
 <details>
 <summary>⚡️ Alternative: Using uv</summary>
 
 If you have [`uv`](https://github.com/astral-sh/uv) installed, you can create and set up your project with a single command:
+
 ```bash
 uvx agent-starter-pack create my-retail-agent -a adk@retail-ai-location-strategy
 ```
+
 This command handles creating the project without needing to pre-install the package into a virtual environment.
+
 </details>
 
-You'll be prompted to select a deployment option (Agent Engine or Cloud Run) and verify your Google Cloud credentials.
+The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
 
 #### Step 2: Install & Run
 Navigate into your **newly created project folder**, then install dependencies and start the server.
@@ -286,8 +292,8 @@ Open `http://localhost:3000` to see the interactive dashboard.
 ```bash
 # Terminal 1: Start the backend
 cd app/frontend/backend
-pip install -r requirements.txt
-python main.py
+uv pip install -r requirements.txt
+uv run main.py
 # Runs at http://localhost:8000
 
 # Terminal 2: Start the frontend
