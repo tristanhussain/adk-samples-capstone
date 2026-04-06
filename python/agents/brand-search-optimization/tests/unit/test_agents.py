@@ -12,24 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-import types as builtin_types
-import google.auth
+"""Agent initialization tests."""
 
-import typing
+from google.adk.apps import App
+from google.adk.runners import InMemoryRunner
 
-typing._UnionGenericAlias = builtin_types.UnionType  # type: ignore[attr-defined]
+from brand_search_optimization import root_agent
 
-project_id = os.getenv("GOOGLE_CLOUD_PROJECT")
-if not project_id and os.getenv("GOOGLE_APPLICATION_CREDENTIALS"):
-    _, project_id = google.auth.default()
 
-os.environ.setdefault(
-    "GOOGLE_CLOUD_PROJECT", project_id or "your-default-project"
-)
-os.environ.setdefault("GOOGLE_CLOUD_LOCATION", "global")
-os.environ.setdefault("GOOGLE_GENAI_USE_VERTEXAI", "True")
-
-from .agent import root_agent
-
-__all__ = ["root_agent"]
+def test_inmemory_runner_uses_app_wrapper() -> None:
+    app = App(name="brand_search_optimization", root_agent=root_agent)
+    runner = InMemoryRunner(app=app)
+    assert runner.app is not None
+    assert runner.app.name == "brand_search_optimization"
