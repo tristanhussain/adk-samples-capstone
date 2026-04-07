@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
 import gym
 
 # Register the environment
@@ -32,7 +34,7 @@ def init_env(num_products):
 
 
 # Configuration constants
-NUM_PRODUCT_ITEMS = 50000
+NUM_PRODUCT_ITEMS = int(os.environ.get("NUM_PRODUCT_ITEMS", "50000"))
 
 
 class EnvRegistry:

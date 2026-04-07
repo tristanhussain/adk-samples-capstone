@@ -33,7 +33,7 @@ HUMAN_ATTR_PATH = join(BASE_DIR, "../data/items_human_ins.json")
 HUMAN_ATTR_PATH = join(BASE_DIR, "../data/items_human_ins.json")
 
 
-def random_idx(cum_weights):
+def random_idx(cum_weights: list[float] | list[int]) -> int:
     """Generate random index by sampling uniformly from sum of all weights, then
 
     selecting the `min` between the position to keep the list sorted (via bisect)
@@ -45,7 +45,7 @@ def random_idx(cum_weights):
     return idx
 
 
-def setup_logger(session_id, user_log_dir):
+def setup_logger(session_id: str, user_log_dir: str) -> logging.Logger:
     """Creates a log file and logging object for the corresponding session ID"""
     logger = logging.getLogger(session_id)
     formatter = logging.Formatter("%(message)s")
