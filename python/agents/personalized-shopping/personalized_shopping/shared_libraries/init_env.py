@@ -14,7 +14,7 @@
 
 import os
 
-import gym
+import gymnasium as gym
 
 # Register the environment
 gym.envs.registration.register(
@@ -30,6 +30,7 @@ def init_env(num_products):
         "WebAgentTextEnv-v0",
         observation_mode="text",
         num_products=num_products,
+        disable_env_checker=True,
     )
 
 
