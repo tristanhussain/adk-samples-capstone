@@ -599,7 +599,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "absl-py", marker = "extra == 'deployment'", specifier = ">=2.2.1" },
-    { name = "agent-starter-pack", marker = "extra == 'dev'", specifier = ">=0.14.1" },
+    { name = "agent-starter-pack", marker = "extra == 'dev'", specifier = ">=0.32.0" },
     { name = "codespell", marker = "extra == 'dev'", specifier = ">=2.2.0" },
     { name = "google-adk", specifier = ">=1.0.0" },
     { name = "google-adk", extras = ["eval"], marker = "extra == 'dev'", specifier = ">=1.0.0" },
