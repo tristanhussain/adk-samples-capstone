@@ -150,7 +150,7 @@ Then run `make install && make dev` to start the agent.
 
 #### Step 1: Create Project from Template
 
-The fastest way to get a production-ready version of this agent is using the [Agent Starter Pack](https://goo.gle/agent-starter-pack). It scaffolds a full project with CI/CD, deployment scripts, and best practices built in.
+This command uses the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a new directory (`my-retail-agent`) with all the necessary code.
 
 ```bash
 uvx agent-starter-pack create my-retail-agent -a adk@retail-ai-location-strategy
