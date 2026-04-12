@@ -44,116 +44,107 @@ This diagram shows the detailed architecture of the agents and tools used
 to implement this workflow.
 <img src="financial-advisor.png" alt="Financial Advisor" width="800"/>
 
-## Run this agent
+## Quick Start with Agent Starter Pack (Recommended)
 
-> [!IMPORTANT]
-> This agent uses the Agent Starter Pack, which is the fastest and easiest way to run and customize this agent.
+The fastest way to get a production-ready version of this agent is using the
+[Agent Starter Pack](https://goo.gle/agent-starter-pack). It scaffolds a full
+project with CI/CD, deployment scripts, and best practices built in.
 
-From the `python` directory, run the following command:
-
-```shell
-uvx agent start financial-advisor
+```bash
+uvx agent-starter-pack create my-financial-advisor -a adk@financial-advisor
 ```
 
-This will start the agent and make it available to call from the command line.
+This single command will:
+- Copy the financial-advisor sample into a new project
+- Prompt you to select deployment options (Cloud Run, Agent Engine, etc.)
+- Generate CI/CD pipelines and infrastructure-as-code
+- Set up a ready-to-deploy project structure
 
-In a separate terminal, you can chat with this agent by running:
+Once created, follow the generated project's README for deployment instructions.
 
-```shell
-uvx agent chat financial-advisor -- -q "Analyze AAPL"
-```
+## Setup and Installation (Local Development)
 
-<details>
-<summary>Alternative: Set up and run manually</summary>
+If you prefer to run the agent directly from this repository without the
+starter pack scaffolding, follow the steps below.
 
-### Setup
+### Prerequisites
 
-1.  **Prerequisites**
-
-    *   Python 3.10+
-    *   `uv` - for dependency management and packaging. Please follow the
-        instructions on the official
-        [uv website](https://docs.astral.sh/uv/) for installation.
-
-        ```bash
-        curl -LsSf https://astral.sh/uv/install.sh | sh
-        ```
-
-    * A project on Google Cloud Platform
-    * Google Cloud CLI - for installation, please follow the instruction on the
-      official
-      [Google Cloud website](https://cloud.google.com/sdk/docs/install).
-
-2.  **Installation**
-
-    From this agent's directory (`python/agents/financial-advisor`), run the
-    following command:
+*   Python 3.10+
+*   [uv](https://docs.astral.sh/uv/) for dependency management and packaging.
 
     ```bash
-    # Install the package and dependencies.
-    uv sync
+    curl -LsSf https://astral.sh/uv/install.sh | sh
     ```
 
-3.  **Configuration**
+* A project on Google Cloud Platform
+* [Google Cloud CLI](https://cloud.google.com/sdk/docs/install)
 
-    *   Set up Google Cloud credentials.
+### Installation
 
-        *   You may set the following environment variables in your shell, or in
-            a `.env` file instead.
+```bash
+# Clone this repository.
+git clone https://github.com/google/adk-samples.git
+cd adk-samples/python/agents/financial-advisor
+# Install the package and dependencies.
+uv sync
+```
 
-        ```bash
-        export GOOGLE_GENAI_USE_VERTEXAI=true
-        export GOOGLE_CLOUD_PROJECT=<your-project-id>
-        export GOOGLE_CLOUD_LOCATION=<your-project-location>
-        export GOOGLE_CLOUD_STORAGE_BUCKET=<your-storage-bucket>  # Only required for deployment on Agent Engine
-        ```
+### Configuration
 
-    *   Authenticate your GCloud account.
+1.  Copy `.env.example` to `.env` and fill in your project details:
 
-        ```bash
-        gcloud auth application-default login
-        gcloud auth application-default set-quota-project $GOOGLE_CLOUD_PROJECT
-        ```
+    ```bash
+    cp .env.example .env
+    ```
 
-### Running the Agent
+2.  Required environment variables (set in `.env` or your shell):
 
-**Using `adk`**
+    ```bash
+    GOOGLE_GENAI_USE_VERTEXAI=1
+    GOOGLE_CLOUD_PROJECT=<your-project-id>
+    GOOGLE_CLOUD_LOCATION=<your-project-location>
+    GOOGLE_CLOUD_STORAGE_BUCKET=<your-storage-bucket>  # Only required for deployment on Agent Engine
+    ```
+
+3.  Authenticate with Google Cloud:
+
+    ```bash
+    gcloud auth application-default login
+    gcloud auth application-default set-quota-project $GOOGLE_CLOUD_PROJECT
+    ```
+
+The agent's `__init__.py` automatically loads `.env` via `python-dotenv`
+and attempts to discover your GCP project via Application Default
+Credentials (ADC). If ADC is configured, you only need to set
+`GOOGLE_CLOUD_PROJECT` when your default project differs from what
+`gcloud` returns.
+
+## Running the Agent
 
 ADK provides convenient ways to bring up agents locally and interact with them.
 You may talk to the agent using the CLI:
 
 ```bash
-adk run financial_advisor
+uv run adk run financial_advisor
 ```
 
 Or on a web interface:
 
 ```bash
- adk web
+uv run adk web
 ```
 
 The command `adk web` will start a web server on your machine and print the URL.
 You may open the URL, select "financial_advisor" in the top-left drop-down menu, and
 a chatbot interface will appear on the right. The conversation is initially
-blank. Here are some example requests you may ask the Financial Advisor to verify:
+blank. Here are some example requests you may ask the Financial Advisor:
 
 ```
 who are you
 ```
 
-Sampled responses of these requrests are shown below in the [Example
-Interaction](#example-interaction) section.
+Sampled responses of these requests are shown below in the [Example Interaction](#example-interaction) section.
 
-```
-I am the financial coordinator agent. My role is to guide you through a structured process to receive financial advice. I work with specialized subagents to help you:
-
-Analyze a market ticker.
-Develop trading strategies based on your risk profile and investment goals.
-Define an optimal plan for executing those strategies.
-Evaluate the overall risk of the proposed plan.
-How can I help you start this process today? For example, we could begin by analyzing a market ticker.
-
-```
 
 ### Example Interaction
 
@@ -793,32 +784,6 @@ To delete the deployed agent, you may run the following command:
 ```bash
 uv run deployment/deploy.py --delete --resource_id=${AGENT_ENGINE_ID}
 ```
-
-### Alternative: Using Agent Starter Pack
-
-You can also use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:
-
-```bash
-# Create and activate a virtual environment
-python -m venv .venv && source .venv/bin/activate # On Windows: .venv\Scripts\activate
-
-# Install the starter pack and create your project
-pip install --upgrade agent-starter-pack
-agent-starter-pack create my-financial-advisor -a adk@financial-advisor
-```
-
-<details>
-<summary>⚡️ Alternative: Using uv</summary>
-
-If you have [`uv`](https://github.com/astral-sh/uv) installed, you can create and set up your project with a single command:
-```bash
-uvx agent-starter-pack create my-financial-advisor -a adk@financial-advisor
-```
-This command handles creating the project without needing to pre-install the package into a virtual environment.
-
-</details>
-
-The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
 
 ## Customization
 
