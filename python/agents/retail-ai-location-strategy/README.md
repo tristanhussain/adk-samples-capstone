@@ -150,7 +150,18 @@ Then run `make install && make dev` to start the agent.
 
 #### Step 1: Create Project from Template
 
-You can use the [Agent Starter Pack](https://goo.gle/agent-starter-pack) to create a production-ready version of this agent with additional deployment options:
+The fastest way to get a production-ready version of this agent is using the [Agent Starter Pack](https://goo.gle/agent-starter-pack). It scaffolds a full project with CI/CD, deployment scripts, and best practices built in.
+
+```bash
+uvx agent-starter-pack create my-retail-agent -a adk@retail-ai-location-strategy
+```
+
+The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
+
+<details>
+<summary>⚡️ Alternative: Using pip</summary>
+
+If you don't have `uv` installed, you can use pip:
 
 ```bash
 # Create and activate a virtual environment
@@ -161,20 +172,7 @@ pip install --upgrade agent-starter-pack
 agent-starter-pack create my-retail-agent -a adk@retail-ai-location-strategy
 ```
 
-<details>
-<summary>⚡️ Alternative: Using uv</summary>
-
-If you have [`uv`](https://github.com/astral-sh/uv) installed, you can create and set up your project with a single command:
-
-```bash
-uvx agent-starter-pack create my-retail-agent -a adk@retail-ai-location-strategy
-```
-
-This command handles creating the project without needing to pre-install the package into a virtual environment.
-
 </details>
-
-The starter pack will prompt you to select deployment options and provides additional production-ready features including automated CI/CD deployment scripts.
 
 #### Step 2: Install & Run
 Navigate into your **newly created project folder**, then install dependencies and start the server.
