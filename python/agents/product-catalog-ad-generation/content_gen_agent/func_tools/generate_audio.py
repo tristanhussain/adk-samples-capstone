@@ -71,7 +71,9 @@ async def generate_audio(
 
     try:
         # Get credentials
-        creds, _ = google.auth.default()
+        creds, _ = google.auth.default(
+            scopes=["https://www.googleapis.com/auth/cloud-platform"]
+        )
         auth_req = google.auth.transport.requests.Request()
         creds.refresh(auth_req)
         token = creds.token
@@ -197,7 +199,7 @@ async def _generate_voiceover_content(prompt: str, text: str) -> bytes | None:
             input=synthesis_input, voice=voice, audio_config=audio_config
         )
         return response.audio_content
-    except GoogleAPICallError as e:
+    except (GoogleAPICallError, Exception) as e:
         logging.error(
             "Failed to generate voiceover content: %s", e, exc_info=True
         )

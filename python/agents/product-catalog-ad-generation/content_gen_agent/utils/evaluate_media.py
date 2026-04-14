@@ -111,7 +111,7 @@ async def evaluate_media(
         if result.decision == "Fail":
             logging.warning("Evaluation failed reason: %s", result.reason)
         return result
-    except (api_exceptions.GoogleAPICallError, ValueError) as e:
+    except (api_exceptions.GoogleAPICallError, ValueError, Exception) as e:
         logging.error("Media evaluation failed: %s", e, exc_info=True)
         return None
 

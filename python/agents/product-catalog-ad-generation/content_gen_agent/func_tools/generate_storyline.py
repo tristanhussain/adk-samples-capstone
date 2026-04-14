@@ -398,7 +398,7 @@ def _generate_storyline_text(
                     return repaired_story_data
 
         return {"error": "Received an empty response from the model."}
-    except (json.JSONDecodeError, ValueError) as e:
+    except (json.JSONDecodeError, ValueError, Exception) as e:
         logging.error("Error generating storyline text: %s", e, exc_info=True)
         return {"error": f"Error generating storyline text: {e}"}
 

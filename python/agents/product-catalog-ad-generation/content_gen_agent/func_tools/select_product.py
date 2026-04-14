@@ -56,7 +56,7 @@ def select_product_from_bq(product_name: str) -> dict | None:
         for row in results:
             return dict(row)
 
-    except api_exceptions.GoogleAPICallError as e:
+    except (api_exceptions.GoogleAPICallError, Exception) as e:
         logging.error("An error occurred: %s", e)
         return None
 
