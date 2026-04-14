@@ -20,7 +20,7 @@ from google.api_core import exceptions as api_exceptions
 from google.cloud import bigquery
 
 
-def select_product_from_bq(product_name: str) -> dict:
+def select_product_from_bq(product_name: str) -> dict | None:
     """
     Searches for a product in BigQuery by its name within the search_tags
     array.

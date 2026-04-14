@@ -41,8 +41,22 @@ This project contains default product imagery and a corporate logo that will get
 
 Before you begin, ensure you have:
 - **Google Cloud SDK**: For GCP services - [Install](https://cloud.google.com/sdk/docs/install)
+- **uv**: For dependency management and local execution - [Install](https://docs.astral.sh/uv/)
 
-## Run this agent
+## Using Agent Starter Pack (ASP)
+
+> [!IMPORTANT]
+> ASP is the recommended path for this agent. It scaffolds a production-ready project with deployment options and CI/CD workflows.
+
+From the `python` directory, create a project from this sample with:
+
+```shell
+uvx agent-starter-pack create my-product-catalog-ad-generation -a adk@product-catalog-ad-generation
+```
+
+Then run your generated project by following its README.
+
+## Run this agent locally
 
 > [!IMPORTANT]
 > This agent uses the Agent Starter Pack, which is the fastest and easiest way to run and customize this agent.
@@ -84,7 +98,7 @@ If you do not have your own product images, you can use this script to generate 
 **Usage:**
 
 ```bash
-python scripts/generate_sample_data.py
+uv run python scripts/generate_sample_data.py
 ```
 
 **Configuration:**
@@ -122,7 +136,11 @@ To add your own products to the system, upload your product images to the `stati
 
 ## Usage
 
-After installing dependencies, the product catalog ad generation agent can be run via the `adk web` command.
+After installing dependencies, the product catalog ad generation agent can be run via:
+
+```bash
+uv run adk web
+```
 
 The main agent orchestrates the entire ad generation workflow, which can be broken down into the following steps:
 
@@ -163,7 +181,7 @@ If your product images do not have a `9:16` aspect ratio, you can run the follow
 
 **Usage:**
 ```bash
-python scripts/add_padding.py
+uv run python scripts/add_padding.py
 ```
 
 ## Video Storage

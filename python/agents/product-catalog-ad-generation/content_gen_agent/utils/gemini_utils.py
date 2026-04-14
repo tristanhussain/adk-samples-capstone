@@ -14,7 +14,7 @@
 """Utility functions for interacting with the Gemini API."""
 
 import logging
-from typing import TypedDict
+from typing import Any, TypedDict, cast
 
 from google import auth, genai
 from google.api_core import exceptions as api_exceptions
@@ -83,7 +83,7 @@ async def call_gemini_image_api(
     try:
         response = await client.aio.models.generate_content(
             model=model,
-            contents=contents,
+            contents=cast(Any, contents),
             config=GENERATE_CONTENT_CONFIG,
         )
         if (

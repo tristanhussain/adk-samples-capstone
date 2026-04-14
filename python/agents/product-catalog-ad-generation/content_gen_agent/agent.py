@@ -19,7 +19,6 @@ necessary tools, and configures the underlying language model.
 """
 
 import os
-import google.auth
 
 from google.adk.agents import Agent
 from google.adk.apps import App
@@ -36,14 +35,7 @@ from .func_tools.generate_video import generate_video
 from .utils.storytelling import STORYTELLING_INSTRUCTIONS
 
 COMPANY_NAME = os.environ.get("COMPANY_NAME", "ACME Corp")
-
-try:
-    _, project_id = google.auth.default()
-except Exception:
-    project_id = "your-default-project"
-
-os.environ.setdefault("GOOGLE_CLOUD_PROJECT", project_id or "your-default-project")
-os.environ.setdefault("GOOGLE_CLOUD_LOCATION", "global")
+MODEL_NAME = os.environ.get("MODEL_NAME", "gemini-2.5-flash")
 
 SYSTEM_INSTRUCTION: str = f"""
 ROLE: You are a Personalized Ad Generation Assistant.
@@ -102,7 +94,7 @@ accomplish this.
 
 root_agent = Agent(
     name="content_generation_agent",
-    model="gemini-3-flash-preview",
+  model=MODEL_NAME,
     instruction=SYSTEM_INSTRUCTION,
     tools=[
         load_artifacts,
