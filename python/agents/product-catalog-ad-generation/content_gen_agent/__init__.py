@@ -13,15 +13,32 @@
 # limitations under the License.
 
 import os
+import logging
 
 import google.auth
 
-_, project_id = google.auth.default()
+project_id = os.environ.get("GOOGLE_CLOUD_PROJECT") or os.environ.get(
+    "GCP_PROJECT"
+)
+
+if not project_id:
+    try:
+        _, detected_project_id = google.auth.default(
+            scopes=["https://www.googleapis.com/auth/cloud-platform"]
+        )
+        project_id = detected_project_id
+    except Exception as e:  # pragma: no cover - defensive init fallback
+        logging.warning(
+            "Unable to infer project ID from ADC during package init: %s", e
+        )
+
 os.environ.setdefault(
     "GOOGLE_CLOUD_PROJECT", project_id or "your-default-project"
 )
-os.environ.setdefault("GOOGLE_CLOUD_LOCATION", "global")
-os.environ.setdefault("GOOGLE_GENAI_USE_VERTEXAI", "True")
+os.environ.setdefault(
+    "GOOGLE_CLOUD_LOCATION", os.environ.get("GCP_LOCATION", "global")
+)
+os.environ.setdefault("GOOGLE_GENAI_USE_VERTEXAI", "1")
 
 from .agent import app, root_agent
 

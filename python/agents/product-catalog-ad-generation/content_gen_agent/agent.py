@@ -94,7 +94,7 @@ accomplish this.
 
 root_agent = Agent(
     name="content_generation_agent",
-  model=MODEL_NAME,
+    model=MODEL_NAME,
     instruction=SYSTEM_INSTRUCTION,
     tools=[
         load_artifacts,
