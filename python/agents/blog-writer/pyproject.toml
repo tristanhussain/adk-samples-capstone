@@ -8,9 +8,12 @@ readme = "README.md"
 requires-python = ">=3.10,<3.13"
 dependencies = [
     "google-cloud-aiplatform[adk,agent-engines]>=1.117.0",
+    "google-auth>=2.40.3",
     "google-genai>=1.9.0",
+    "mypy~=1.19.0",
     "pydantic>=2.10.6",
     "python-dotenv>=1.0.1",
+    "ruff>=0.4.6",
     "google-adk>=1.0.0",
 ]
 
@@ -38,6 +41,9 @@ extend = "../../../pyproject.toml"
 
 [tool.ruff.lint.isort]
 known-first-party = ["blogger_agent"]
+
+[tool.ruff.lint.per-file-ignores]
+"**/__init__.py" = ["E402", "F401", "I001"]
 
 [tool.mypy]
 disallow_untyped_calls = true

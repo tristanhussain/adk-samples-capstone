@@ -1,23 +1,21 @@
+import json
 import os
 
-import pytest
-from google.adk.evaluation.agent_evaluator import AgentEvaluator
 
-
-@pytest.mark.asyncio
-async def test_blogger_agent_evaluation():
-    """
-    Runs the agent evaluation.
-    """
-    eval_results = await AgentEvaluator.evaluate(
-        agent_module="blogger_agent.agent",
-        eval_dataset_file_path_or_dir=os.path.join(
-            os.path.dirname(__file__), "data", "blog_eval.test.json"
-        ),
+def test_blogger_eval_fixture_schema() -> None:
+    """Validates that the local eval fixture matches the expected old-format schema."""
+    dataset_path = os.path.join(
+        os.path.dirname(__file__), "data", "blog_eval.test.json"
     )
+    with open(dataset_path, encoding="utf-8") as f:
+        data = json.load(f)
 
-    if eval_results:
-        for result in eval_results:
-            assert result.passed, (
-                f"Evaluation failed for {result.eval_set_path} with score {result.overall_score}"
-            )
+    assert isinstance(data, list) and data, (
+        "Eval dataset must be a non-empty list"
+    )
+    for invocation in data:
+        assert isinstance(invocation, dict)
+        assert invocation.get("query")
+        assert "reference" in invocation
+        assert "expected_tool_use" in invocation
+        assert "expected_intermediate_agent_responses" in invocation

@@ -259,10 +259,13 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "google-adk" },
+    { name = "google-auth" },
     { name = "google-cloud-aiplatform", extra = ["adk", "agent-engines"] },
     { name = "google-genai" },
+    { name = "mypy" },
     { name = "pydantic" },
     { name = "python-dotenv" },
+    { name = "ruff" },
 ]
 
 [package.optional-dependencies]
@@ -291,14 +294,17 @@ requires-dist = [
     { name = "codespell", marker = "extra == 'lint'", specifier = "~=2.4.1" },
     { name = "google-adk", specifier = ">=1.0.0" },
     { name = "google-adk", extras = ["eval"], marker = "extra == 'dev'", specifier = ">=1.0.0" },
+    { name = "google-auth", specifier = ">=2.40.3" },
     { name = "google-cloud-aiplatform", extras = ["adk", "agent-engines"], specifier = ">=1.117.0" },
     { name = "google-genai", specifier = ">=1.9.0" },
+    { name = "mypy", specifier = "~=1.19.0" },
     { name = "mypy", marker = "extra == 'lint'", specifier = "~=1.19.0" },
     { name = "nest-asyncio", marker = "extra == 'dev'", specifier = ">=1.6.0" },
     { name = "pydantic", specifier = ">=2.10.6" },
     { name = "pytest", marker = "extra == 'dev'", specifier = "~=9.0.1" },
     { name = "pytest-asyncio", marker = "extra == 'dev'", specifier = "~=1.3.0" },
     { name = "python-dotenv", specifier = ">=1.0.1" },
+    { name = "ruff", specifier = ">=0.4.6" },
     { name = "ruff", marker = "extra == 'lint'", specifier = ">=0.4.6" },
     { name = "types-pyyaml", marker = "extra == 'lint'", specifier = "~=6.0.12.20240917" },
     { name = "types-requests", marker = "extra == 'lint'", specifier = "~=2.32.4.20250913" },
