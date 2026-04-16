@@ -71,11 +71,15 @@ pythonpath = "."
 asyncio_default_fixture_loop_scope = "function"
 
 [tool.agent-starter-pack]
+name = "blogger-agent"
+description = "AI-driven agent designed to facilitate the exploration of the blogger agent landscape"
+base_template = "adk"
+agent_directory = "blogger_agent"
+asp_version = "0.32.0"
 example_question = "Write an article about Nano Banana"
 
-[tool.agent-starter-pack.settings]
-agent_directory = "blogger_agent"
-deployment_targets = ["agent_engine", "cloud_run"]
+[tool.agent-starter-pack.create_params]
+deployment_target = "cloud_run"
 
 [build-system]
 requires = ["hatchling"]
