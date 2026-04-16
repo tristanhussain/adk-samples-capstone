@@ -51,6 +51,12 @@ dev = [
     "types-requests>=2.32.0.20240914",
 ]
 
+[tool.agent-starter-pack]
+example_question = "What are the key business segments mentioned in Alphabet's 2024 10-K report?"
+
+[tool.agent-starter-pack.settings]
+agent_directory = "rag"
+
 # --- CI/CD AND TESTING METADATA ---
 [tool.agent-starter-pack.testing]
 RAG_CORPUS = "projects/adk-devops/locations/us-central1/ragCorpora/456"
@@ -97,9 +103,3 @@ asyncio_default_fixture_loop_scope = "function"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
-
-[tool.agent-starter-pack]
-example_question = "What are the key business segments mentioned in Alphabet's 2024 10-K report?"
-
-[tool.agent-starter-pack.settings]
-agent_directory = "rag"
