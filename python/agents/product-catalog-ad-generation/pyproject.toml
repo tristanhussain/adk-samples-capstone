@@ -66,6 +66,7 @@ packages = ["content_gen_agent"]
 known-first-party = ["content_gen_agent"]
 
 [tool.agent-starter-pack]
+agent_directory = "content_gen_agent"
 example_question = "Generate a short vertical ad for a skincare product aimed at busy professionals."
 deployment_targets = ["agent_engine", "cloud_run"]
 

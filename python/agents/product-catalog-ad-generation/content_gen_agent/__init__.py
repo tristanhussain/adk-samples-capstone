@@ -40,6 +40,14 @@ os.environ.setdefault(
 )
 os.environ.setdefault("GOOGLE_GENAI_USE_VERTEXAI", "1")
 
+if os.environ.get("CI", "").lower() == "true":
+    # In CI, disable background telemetry exporters that can trigger
+    # credential scope exchange errors unrelated to agent functionality.
+    os.environ.setdefault("OTEL_SDK_DISABLED", "true")
+    os.environ.setdefault("OTEL_TRACES_EXPORTER", "none")
+    os.environ.setdefault("OTEL_METRICS_EXPORTER", "none")
+    os.environ.setdefault("OTEL_LOGS_EXPORTER", "none")
+
 from .agent import app, root_agent
 
 __all__ = ["app", "root_agent"]
