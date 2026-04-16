@@ -49,6 +49,9 @@ packages = ["podcast_transcript_agent"]
 example_question = "Generate a podcast transcript from this document with host Charlotte and expert Dr Joe Sponge."
 deployment_targets = ["agent_engine", "cloud_run"]
 
+[tool.agent-starter-pack.settings]
+agent_directory = "podcast_transcript_agent"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
